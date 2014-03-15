@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Gravistroids</title>
+        <style id="container_size">
+            #container {
+                width: 100px; 
+                height:100px;
+            }
+        </style>
+        <style>
+            body {
+                margin: 0; 
+                padding: 0;
+                background: gray;
+            }
+            #container {
+                background: white;
+            }
+        </style>
+		<script src="jquery-2.1.0.min.js" language="javascript"></script>
+		<script src="AudioSystem.js" language="javascript"></script>
+		<script src="MessageDispatcher.js" language="javascript"></script>
+		<script src="Shapes.js" language="javascript"></script>
+		<script src="Renderer.js" language="javascript"></script>
+		<script src="Stage.js" language="javascript"></script>
+		<script src="Game.js" language="javascript"></script>
+		<script src="GameObject.js" language="javascript"></script>
+		<script src="CollisionManager.js" language="javascript"></script>
+		<script src="Objects.js" language="javascript"></script>
+		<script src="Util.js" language="javascript"></script>
+		<script src="Components.js" language="javascript"></script>
+		<script src="ObjectFactory.js" language="javascript"></script>
+		<script language="javascript">
+		window.onload = function() {
+            var aspectRatio = screen.width/screen.height;
+			var game = new Game('container', 500, aspectRatio, 1);
+            game.start();
+			window.game = game;
+		}
+		</script>
+	</head>
+	<body>
+		<div id="container">
+		</div>
+	</body>
+</html>
