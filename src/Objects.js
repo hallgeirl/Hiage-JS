@@ -81,7 +81,7 @@ var ship =
                     barrels: 2
                 }
             ],
-            sound: 'sound/gun.ogg'
+            sound: 'data/sound/gun.ogg'
         },
         {
             type: 'collision'
@@ -91,7 +91,7 @@ var ship =
             particlesize: 20,
             particlecount: 100,
             size: 5,
-            sound: 'sound/explode3.ogg'
+            sound: 'data/sound/explode3.ogg'
         },
         {
             type: 'dieonasteroidcollision'
@@ -139,7 +139,7 @@ var bullet =
             particlesize: 5,
             particlecount: 5,
             size: 1,
-            sound: 'sound/explode2.ogg'
+            sound: 'data/sound/explode2.ogg'
         },
         {
             type: 'dieonasteroidcollision'
@@ -195,7 +195,7 @@ var asteroid =
             particlesize: 5,
             particlecount: 5,
             size: 0.5,
-            sound: 'sound/explode.ogg'
+            sound: 'data/sound/explode.ogg'
         },
         {
             type: 'destroyoutofbounds'

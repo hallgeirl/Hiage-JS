@@ -76,5 +76,5 @@ ObjectFactory.prototype.createParticle = function(config) {
         velocity = vectorAdd(velocity, config.ownerVelocity);
     config.velocity = velocity;
 
-    this.stage.receiveMessage(new Message('spawn', { type: 'particle', config: config }));
+    this.messageDispatcher.sendMessage(new Message('spawn', { type: 'particle', config: config }));
 }
