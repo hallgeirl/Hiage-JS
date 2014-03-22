@@ -5,3 +5,4 @@ bin
 *.user
 *.suo
 Properties
+gravistroids/lib

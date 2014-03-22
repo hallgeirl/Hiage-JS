@@ -57,7 +57,7 @@
     <Reference Include="System.EnterpriseServices" />-->
     <Content Include="data\sound\explode.ogg" />
     <Content Include="index.html" />
-    <Content Include="lib\jquery-2.1.0.min.js" />
+    <Content Include="src\main.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,7 +72,27 @@
     <Content Include="data\sound\gun.ogg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lib\jquery-2.1.0.min.map" />
+    <Content Include="data\objects\ship.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\resources.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\objects\objects.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="lib\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -85,8 +105,8 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>58262</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:36262/</IISUrl>
@@ -100,19 +120,13 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>del *.* /q
-rmdir /S lib
-mkdir lib\hiage.js
-
-robocopy ..\lib\ .\lib /MIR
-robocopy ..\data\ .\data /MIR
-robocopy ..\..\hiage.js\src\ lib\hiage.js /MIR
-copy ..\index.html .\</PreBuildEvent>
+    <PreBuildEvent>robocopy ..\..\hiage.js\src\ ..\lib\hiage.js
+robocopy ..\src ..\lib
+copy ..\..\hiage.js\lib\*.* ..\lib\</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>del *.dll
-del *.pdb
-start chrome index.html</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
