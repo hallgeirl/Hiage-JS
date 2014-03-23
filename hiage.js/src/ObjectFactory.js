@@ -5,10 +5,9 @@ define(["hiage.js/GameObject",
         "hiage.js/Util"],
     function (GameObject, components, shapes, Message) {
 
-        function ObjectFactory(game, stage, messageDispatcher) {
+        function ObjectFactory(resourceManager, messageDispatcher) {
             this.messageDispatcher = messageDispatcher;
-            this.game = game;
-            this.stage = stage;
+            this.resourceManager = resourceManager;
             this.componentMap = {}
 
             this.componentMap['shape'] = components["ShapeComponent"];
@@ -37,9 +36,11 @@ define(["hiage.js/GameObject",
             this.shapeMap['circle'] = shapes["Circle"];
         }
 
-        ObjectFactory.prototype.createObject = function (template, config) {
-            var go = new GameObject(this.stage, this.messageDispatcher);
-            go.type = template.type;
+        ObjectFactory.prototype.createObject = function (type, config) {
+            var template = this.resourceManager.getResource("object", type);
+
+            var go = new GameObject(this.messageDispatcher);
+            go.type = type;
             config.messageTag = go.id;
 
             for (var i = 0; i < template.components.length; i++)

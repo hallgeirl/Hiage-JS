@@ -1,105 +1,105 @@
 ﻿{ 
-	type: 'ship',
-	components: [
+	"type": "ship",
+	"components": [
 		{
-			type: 'shape',
-			shape: 
+			"type": "shape",
+			"shape": 
 			{
-				type: 'wedge',
-				sides: 3, radius: 30,
-				fill: 'red',
-				stroke: 'black',
-				strokeWidth: 2,
-				angle: Math.PI/4,
-				offset: [-15,-7]
+				"type": "wedge",
+				"sides": 3, "radius": 30,
+				"fill": "red",
+				"stroke": "black",
+				"strokeWidth": 2,
+				"angle": 0.78539816339744830962,
+				"offset": [-15,-7]
 			},
-			rotation: 3.55
+			"rotation": 3.55
 		},
 		{
-			type: 'spatial',
-			velocity: 
+			"type": "spatial",
+			"velocity": 
 			{
-				x: 0, y: 0
+				"x": 0, "y": 0
 			},
-			position:
+			"position":
 			{
-				x: 0, y: 0
+				"x": 0, "y": 0
 			}
 		},
 		{
-			type: 'controller'
+			"type": "controller"
 		},
 		{
-			type: 'accellerator',
-			magnitude: 200
+			"type": "accellerator",
+			"magnitude": 200
 		},
 		{
-			type: 'gravity',
-			magnitude: -98.8
+			"type": "gravity",
+			"magnitude": -98.8
 		},
 		{
-			type: 'exhaust',
-			pipes: 3
+			"type": "exhaust",
+			"pipes": 3
 		},
 		{
-			type: 'rotation',
-			initial: Math.PI/2.0,
-			speed: 0.05
+			"type": "rotation",
+			"initial": 1.57079632679489661923,
+			"speed": 0.05
 		},
 		{
-			type: 'gun',
-			levels: [
+			"type": "gun",
+			"levels": [
 				{
-					cooldown: 0.1,
-					spread: 0.1,
-					barrels: 1
+					"cooldown": 0.1,
+					"spread": 0.1,
+					"barrels": 1
 				},
 				{
-					cooldown: 0.075,
-					spread: 0.1,
-					barrels: 1
+					"cooldown": 0.075,
+					"spread": 0.1,
+					"barrels": 1
 				},
 				{
-					cooldown: 0.05,
-					spread: 0.05,
-					barrels: 1
+					"cooldown": 0.05,
+					"spread": 0.05,
+					"barrels": 1
 				},
 				{
-					cooldown: 0.1,
-					spread: 0.15,
-					barrels: 2
+					"cooldown": 0.1,
+					"spread": 0.15,
+					"barrels": 2
 				},
 				{
-					cooldown: 0.075,
-					spread: 0.15,
-					barrels: 2
+					"cooldown": 0.075,
+					"spread": 0.15,
+					"barrels": 2
 				},
 				{
-					cooldown: 0.05,
-					spread: 0.15,
-					barrels: 2
+					"cooldown": 0.05,
+					"spread": 0.15,
+					"barrels": 2
 				}
 			],
-			sound: 'data/sound/gun.ogg'
+			"sound": "data/sound/gun.ogg"
 		},
 		{
-			type: 'collision'
+			"type": "collision"
 		},
 		{
-			type: 'explodeonkill',
-			particlesize: 20,
-			particlecount: 100,
-			size: 5,
-			sound: 'data/sound/explode3.ogg'
+			"type": "explodeonkill",
+			"particlesize": 20,
+			"particlecount": 100,
+			"size": 5,
+			"sound": "data/sound/explode3.ogg"
 		},
 		{
-			type: 'dieonasteroidcollision'
+			"type": "dieonasteroidcollision"
 		},
 		{
-			type: 'destroyoutofbounds'
+			"type": "destroyoutofbounds"
 		},
 		{
-			type: 'weaponlevel'
+			"type": "weaponlevel"
 		}
 	]
 }

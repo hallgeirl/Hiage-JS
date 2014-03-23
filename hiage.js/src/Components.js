@@ -1,8 +1,5 @@
-define(["hiage.js/Message"],
-    function (Message) {
-        /*
-Components
-*/
+define(["hiage.js/Message", "hiage.js/Stage"],
+    function (Message, Stage) {
         var components = {};
 
         function Component(config, messageDispatcher) {
@@ -500,11 +497,11 @@ Components
         }
 
         DestroyOutOfBoundsComponent.prototype.update = function (frameTime) {
-            if (this.position.x < -200 || this.position.x > this.owner.stage.stageWidth + 200 ||
-                this.position.y < -200 || this.position.y > this.owner.stage.stageHeight + 200) {
+            if (this.position.x < -200 || this.position.x > Stage.stageWidth + 200 ||
+                this.position.y < -200 || this.position.y > Stage.stageHeight + 200) {
                 this.sendMessage(new Message('kill', { mode: 'final' }, this));
             }
-
+            
         }
         components["DestroyOutOfBoundsComponent"] = DestroyOutOfBoundsComponent;
 

@@ -1,0 +1,29 @@
+﻿{
+    "type": "particle", 
+    "components": [
+        {
+            "type": "shape",
+            "shape": 
+            {
+                "type": "circle",
+                "radius": 5,
+                "fill": "red",
+                "stroke": "black",
+                "strokeWidth": 2
+            } 
+        },
+        {
+            "type": "spatial",
+            "velocity": { "x": 0, "y": 0 },
+            "position": { "x": 0, "y": 0 }
+        },
+        {
+            "type": "lifetime",
+            "lifetime": 1
+        },
+        { 
+            "type": "size",
+            "size": 5
+        }
+    ]
+}

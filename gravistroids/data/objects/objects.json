@@ -1,6 +1,22 @@
 ﻿[
 	{
-		type: "object",
-		path: "ship.json"
+		"type": "object",
+		"path": "ship.json",
+		"name": "ship"
+	},
+	{
+		"type": "object",
+		"path": "bullet.json",
+		"name": "bullet"
+	},
+	{
+		"type": "object",
+		"path": "asteroid.json",
+		"name": "asteroid"
+	},
+	{
+		"type": "object",
+		"path": "particle.json",
+		"name": "particle"
 	}
 ]

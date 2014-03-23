@@ -40,9 +40,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\Components\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="lib\jquery-2.1.0.min.js" />
     <Content Include="lib\require.js" />
@@ -56,9 +54,12 @@
     <Content Include="src\Message.js" />
     <Content Include="src\MessageDispatcher.js" />
     <Content Include="src\ObjectFactory.js" />
-    <Content Include="src\Objects.js" />
     <Content Include="src\Renderer.js" />
-    <Content Include="src\ResourceManager.js" />
+    <Content Include="src\resource\ObjectLoader.js" />
+    <Content Include="src\resource\Resource.js" />
+    <Content Include="src\resource\ResourceLoaderFactory.js" />
+    <Content Include="src\resource\ResourceLoaderMapping.js" />
+    <Content Include="src\resource\ResourceManager.js" />
     <Content Include="src\Shapes.js" />
     <Content Include="src\Stage.js" />
     <Content Include="src\Util.js" />

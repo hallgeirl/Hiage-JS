@@ -3,6 +3,7 @@ define([],
         function Renderer(messageDispatcher, container, height, aspectRatio) {
             this.messageDispatcher = messageDispatcher;
             this.messageDispatcher.registerHandler('render', this);
+            this.messageDispatcher.registerHandler('rendertext', this);
             this.container = container;   
             var width = height * aspectRatio;
             this.createCanvas(width, height);
@@ -35,8 +36,15 @@ define([],
             return this.scale;
         }
 
-        Renderer.prototype.receiveMessage = function(message, sender) {
-            this.renderShape(message.data);
+        Renderer.prototype.receiveMessage = function (message, sender) {
+            switch (message.subject) {
+                case "rendertext":
+                    this.renderText(message.data);
+                    break;
+                default:
+                    this.renderShape(message.data);
+                    break;
+            }
         }
 
         Renderer.prototype.render = function() {

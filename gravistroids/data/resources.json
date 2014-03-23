@@ -1,6 +1,6 @@
 ﻿[
 	{
-		type: "resources",
-		path: "objects/objects.json"
+		"type": "resources",
+		"path": "objects/objects.json"
 	}
 ]

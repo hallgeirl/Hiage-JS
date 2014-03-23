@@ -2,13 +2,17 @@ define(["hiage.js/AudioSystem",
         "hiage.js/MessageDispatcher",
         "hiage.js/Renderer",
         "hiage.js/Stage",
-        "hiage.js/Message"],
+        "hiage.js/Message",
+        "hiage.js/resource/ResourceManager",
+        "hiage.js/ObjectFactory"],
 
-    function (AudioSystem, MessageDispatcher, Renderer, Stage, Message) {
-        function Game(container, height, aspectRatio, layers) {
+    function (AudioSystem, MessageDispatcher, Renderer, Stage, Message, ResourceManager, ObjectFactory) {
+        function Game(container, height, aspectRatio, layers, resourceFile) {
             this.messageDispatcher = new MessageDispatcher();
             this.audioSystem = new AudioSystem(container, 32, this.messageDispatcher);
             this.renderer = new Renderer(this.messageDispatcher, container, height, aspectRatio);
+            this.resourceManager = new ResourceManager();
+            this.resourceManager.loadResources(resourceFile);
             this.container = container;
             this.aspectRatio = aspectRatio;
             this.frameRate = 50;
@@ -20,7 +24,9 @@ define(["hiage.js/AudioSystem",
 
             this.scaleSceneToWindow();
             this.attachEventListeners();
-            this.levelStage = new Stage(this, this.stageWidth, this.stageHeight, this.messageDispatcher);
+            this.objectFactory = new ObjectFactory(this.resourceManager, this.messageDispatcher);
+            this.levelStage = new Stage(this.objectFactory, this.stageWidth, this.stageHeight, this.messageDispatcher);
+            
         }
 
         Game.prototype.scaleSceneToWindow = function () {

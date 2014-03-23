@@ -1,0 +1,44 @@
+﻿{
+    "type": "bullet", 
+    "components": [
+        {
+            "type": "shape",
+            "shape": 
+            {
+                "type": "regularpolygon",
+                "sides": 3, 
+				"radius": 4,
+                "fill": "black",
+                "stroke": "none",
+                "strokeWidth": 0
+            },
+            "rotation": 0
+        },
+        {
+            "type": "spatial",
+            "velocity": { "x": 0, "y": 0 },
+            "position": { "x": 0, "y": 0 }
+        },
+        {
+            "type": "rotation",
+            "initial": 0,
+            "speed": 0
+        },
+        {
+            "type": "collision"
+        },
+        {
+            "type": "explodeonkill",
+            "particlesize": 5,
+            "particlecount": 5,
+            "size": 1,
+            "sound": "data/sound/explode2.ogg"
+        },
+        {
+            "type": "dieonasteroidcollision"
+        },
+        {
+            "type": "destroyoutofbounds"
+        }
+    ]
+}

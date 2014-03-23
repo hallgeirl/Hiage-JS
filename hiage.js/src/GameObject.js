@@ -3,8 +3,7 @@ define([],
         var objectCounter = 1;
 
         //game objects
-        function GameObject(stage, messageDispatcher) {
-            this.stage = stage;
+        function GameObject(messageDispatcher) {
             this.messageDispatcher = messageDispatcher;
             this.components = [];
             this.alive = true;

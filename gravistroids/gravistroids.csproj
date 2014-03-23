@@ -81,18 +81,16 @@
     <Content Include="data\objects\objects.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="web.Debug.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-    <None Include="web.Release.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="lib\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\objects\bullet.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\objects\asteroid.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\objects\particle.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -120,7 +118,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>robocopy ..\..\hiage.js\src\ ..\lib\hiage.js
+    <PreBuildEvent>robocopy ..\..\hiage.js\src\ ..\lib\hiage.js /MIR
 robocopy ..\src ..\lib
 copy ..\..\hiage.js\lib\*.* ..\lib\</PreBuildEvent>
   </PropertyGroup>

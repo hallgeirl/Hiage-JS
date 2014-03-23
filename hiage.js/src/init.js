@@ -12,4 +12,3 @@ requirejs.config({
         'jquery': "jquery-2.1.0.min"
     }
 })
-console.log('inited');
