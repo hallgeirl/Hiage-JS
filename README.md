@@ -13,3 +13,10 @@ If you're not running Visual Studio, you need to do the following:
 - Copy the hiage.js/src folder into gravistroids/lib, and rename it to *hiage.js*.
 - Copy the contents of the hiage.js/lib folder into gravistroids/lib.
 - Open index.html in your browser.
+
+Browser Support
+---------------
+In principle, all standards-compliant browsers with mature HTML5 support, which supports ogg vorbis audio should work fine. The code is developed using Google Chrome for testing, but Firefox and Opera *should* work equally well.
+
+Known issues:
+- Internet Explorer does not support OGG Vorbis audio out of the box, so audio will not work here.  
