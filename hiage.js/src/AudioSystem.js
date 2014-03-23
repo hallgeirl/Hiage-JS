@@ -1,27 +1,29 @@
 define(["jquery"], 
     function($) {
-        function AudioSystem(container, channels, messageDispatcher) {
+        function AudioSystem(resourceManager, channels, messageDispatcher) {
+            this.resourceManager = resourceManager;
             this.channels = [];
-            this.musicChannel = this.createChannel(container);
+            this.musicChannel = this.createChannel();
             this.messageDispatcher = messageDispatcher;
             this.currentChannel = 0;
             this.channelCache = {}
 
             messageDispatcher.registerHandler('play-sound', this);
             for (var i = 0; i < channels; i++)
-                this.channels.push(this.createChannel(container));
+                this.channels.push(this.createChannel());
         }
 
-        AudioSystem.prototype.createChannel = function(container) {
-            var containerElement = $('#' + container)[0];
+        AudioSystem.prototype.createChannel = function() {
+            var containerElement = $(document.body)[0];
             var audioElement = document.createElement('audio');
             containerElement.appendChild(audioElement);
             return audioElement;
         }
 
         AudioSystem.prototype.receiveMessage = function(message) {
+            var sound = this.resourceManager.getResource("audio", message.data);
             if (message.subject == 'play-sound') {
-                this.playSound(message.data);
+                this.playSound(sound.url);
             }
         }
 

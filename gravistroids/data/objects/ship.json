@@ -80,7 +80,7 @@
 					"barrels": 2
 				}
 			],
-			"sound": "data/sound/gun.ogg"
+			"sound": "gun"
 		},
 		{
 			"type": "collision"
@@ -90,7 +90,7 @@
 			"particlesize": 20,
 			"particlecount": 100,
 			"size": 5,
-			"sound": "data/sound/explode3.ogg"
+			"sound": "explode3"
 		},
 		{
 			"type": "dieonasteroidcollision"

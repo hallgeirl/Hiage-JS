@@ -9,10 +9,10 @@ define(["hiage.js/AudioSystem",
     function (AudioSystem, MessageDispatcher, Renderer, Stage, Message, ResourceManager, ObjectFactory) {
         function Game(container, height, aspectRatio, layers, resourceFile) {
             this.messageDispatcher = new MessageDispatcher();
-            this.audioSystem = new AudioSystem(container, 32, this.messageDispatcher);
             this.renderer = new Renderer(this.messageDispatcher, container, height, aspectRatio);
             this.resourceManager = new ResourceManager();
             this.resourceManager.loadResources(resourceFile);
+            this.audioSystem = new AudioSystem(this.resourceManager, 32, this.messageDispatcher);
             this.container = container;
             this.aspectRatio = aspectRatio;
             this.frameRate = 50;

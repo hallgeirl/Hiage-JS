@@ -55,6 +55,7 @@
     <Content Include="src\MessageDispatcher.js" />
     <Content Include="src\ObjectFactory.js" />
     <Content Include="src\Renderer.js" />
+    <Content Include="src\resource\AudioLoader.js" />
     <Content Include="src\resource\ObjectLoader.js" />
     <Content Include="src\resource\Resource.js" />
     <Content Include="src\resource\ResourceLoaderFactory.js" />

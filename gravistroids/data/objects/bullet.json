@@ -32,7 +32,7 @@
             "particlesize": 5,
             "particlecount": 5,
             "size": 1,
-            "sound": "data/sound/explode2.ogg"
+            "sound": "explode2"
         },
         {
             "type": "dieonasteroidcollision"

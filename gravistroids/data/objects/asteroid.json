@@ -43,7 +43,7 @@
             "particlesize": 5,
             "particlecount": 5,
             "size": 0.5,
-            "sound": "data/sound/explode.ogg"
+            "sound": "explode"
         },
         {
             "type": "destroyoutofbounds"
