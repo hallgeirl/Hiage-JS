@@ -1,4 +1,4 @@
-define(["hiage.js/AudioSystem",
+define(["hiage.js/audio/AudioSystem",
         "hiage.js/MessageDispatcher",
         "hiage.js/Renderer",
         "hiage.js/Stage",

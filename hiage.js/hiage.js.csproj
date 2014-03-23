@@ -44,7 +44,7 @@
   <ItemGroup>
     <Content Include="lib\jquery-2.1.0.min.js" />
     <Content Include="lib\require.js" />
-    <Content Include="src\AudioSystem.js" />
+    <Content Include="src\audio\AudioSystem.js" />
     <Content Include="src\Channel.js" />
     <Content Include="src\CollisionManager.js" />
     <Content Include="src\Components.js" />
