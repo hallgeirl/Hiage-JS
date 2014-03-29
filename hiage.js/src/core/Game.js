@@ -1,12 +1,12 @@
 define(["hiage.js/audio/AudioSystem",
-        "hiage.js/MessageDispatcher",
+        "hiage.js/core/MessageDispatcher",
         "hiage.js/Renderer",
-        "hiage.js/Stage",
-        "hiage.js/Message",
+        "hiage.js/core/Message",
         "hiage.js/resource/ResourceManager",
-        "hiage.js/ObjectFactory"],
+        "hiage.js/core/ObjectFactory",
+        "hiage.js/component/ComponentFactory"],
 
-    function (AudioSystem, MessageDispatcher, Renderer, Stage, Message, ResourceManager, ObjectFactory) {
+    function (AudioSystem, MessageDispatcher, Renderer, Message, ResourceManager, ObjectFactory, ComponentFactory) {
         function Game(container, height, aspectRatio, layers, resourceFile) {
             this.messageDispatcher = new MessageDispatcher();
             this.renderer = new Renderer(this.messageDispatcher, container, height, aspectRatio);
@@ -17,16 +17,32 @@ define(["hiage.js/audio/AudioSystem",
             this.aspectRatio = aspectRatio;
             this.frameRate = 50;
             this.intervalId = null;
-            this.speedMultiplier = 10;
-            this.stageWidth = height * aspectRatio;
             this.stageHeight = height;
             this.layers = [];
 
             this.scaleSceneToWindow();
             this.attachEventListeners();
+            this.componentFactory = new ComponentFactory(this.messageDispatcher);
             this.objectFactory = new ObjectFactory(this.resourceManager, this.messageDispatcher);
-            this.levelStage = new Stage(this.objectFactory, this.stageWidth, this.stageHeight, this.messageDispatcher);
+            this.gamestates = []
             
+        }
+
+        //Game state management
+        Game.prototype.pushState = function (gamestate) {
+            if (this.gamestates.length > 0)
+                this.gamestates[this.gamestates.length - 1].suspend();
+
+            this.gamestates.push(gamestate);
+        }
+
+        Game.prototype.popState = function (gamestate) {
+            if (this.gamestates.length == 0)
+                throw "Could not pop state: No states to pop."
+
+            this.gamestates.pop();
+            if (this.gamestates.length > 0)
+                this.gamestates[this.gamestates.length - 1].resume();
         }
 
         Game.prototype.scaleSceneToWindow = function () {
@@ -97,7 +113,8 @@ define(["hiage.js/audio/AudioSystem",
                 this.renderer.clear();
                 var that = this;
 
-                this.levelStage.update(frametime);
+                if (this.gamestates.length > 0)
+                    this.gamestates[this.gamestates.length - 1].update(frametime);
 
                 this.renderer.render();
 

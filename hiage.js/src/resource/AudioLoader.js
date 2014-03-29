@@ -9,5 +9,7 @@
             return resource;
         }
 
+        AudioLoader.getName = function () { return "audio"; }
+
         return AudioLoader;
     });

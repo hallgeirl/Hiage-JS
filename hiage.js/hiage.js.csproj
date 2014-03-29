@@ -40,29 +40,41 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="src\component\AccelleratorComponent.js" />
+    <Content Include="src\component\CollisionComponent.js" />
+    <Content Include="src\component\ControllerComponent.js" />
+    <Content Include="src\component\FrictionComponent.js" />
+    <Content Include="src\component\GravityComponent.js" />
+    <Content Include="src\component\LifetimeComponent.js" />
+    <Content Include="src\component\RotationComponent.js" />
+    <Content Include="src\component\ShapeComponent.js" />
+    <Content Include="src\component\SpatialComponent.js" />
+    <Content Include="src\config.json" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="lib\jquery-2.1.0.min.js" />
     <Content Include="lib\require.js" />
     <Content Include="src\audio\AudioSystem.js" />
     <Content Include="src\Channel.js" />
     <Content Include="src\CollisionManager.js" />
-    <Content Include="src\Components.js" />
-    <Content Include="src\Game.js" />
-    <Content Include="src\GameObject.js" />
-    <Content Include="src\init.js" />
-    <Content Include="src\Message.js" />
-    <Content Include="src\MessageDispatcher.js" />
-    <Content Include="src\ObjectFactory.js" />
+    <Content Include="src\component\Component.js" />
+    <Content Include="src\component\ComponentFactory.js" />
+    <Content Include="src\Configuration.js" />
+    <Content Include="src\core\Game.js" />
+    <Content Include="src\core\GameObject.js" />
+    <Content Include="src\Hiage.js" />
+    <Content Include="src\core\Message.js" />
+    <Content Include="src\core\MessageDispatcher.js" />
+    <Content Include="src\core\ObjectFactory.js" />
     <Content Include="src\Renderer.js" />
+    <Content Include="src\resource\AllResourceLoaders.js" />
     <Content Include="src\resource\AudioLoader.js" />
     <Content Include="src\resource\ObjectLoader.js" />
     <Content Include="src\resource\Resource.js" />
     <Content Include="src\resource\ResourceLoaderFactory.js" />
-    <Content Include="src\resource\ResourceLoaderMapping.js" />
     <Content Include="src\resource\ResourceManager.js" />
     <Content Include="src\Shapes.js" />
-    <Content Include="src\Stage.js" />
     <Content Include="src\Util.js" />
   </ItemGroup>
   <ItemGroup>

@@ -1,35 +1,13 @@
-define(["hiage.js/GameObject",
-        "hiage.js/Components",
+define(["hiage.js/core/GameObject",
+        "hiage.js/component/ComponentFactory",
         "hiage.js/Shapes",
-        "hiage.js/Message",
+        "hiage.js/core/Message",
         "hiage.js/Util"],
-    function (GameObject, components, shapes, Message) {
+    function (GameObject, ComponentFactory, shapes, Message) {
 
         function ObjectFactory(resourceManager, messageDispatcher) {
             this.messageDispatcher = messageDispatcher;
             this.resourceManager = resourceManager;
-            this.componentMap = {}
-
-            this.componentMap['shape'] = components["ShapeComponent"];
-            this.componentMap['spatial'] = components["SpatialComponent"];
-            this.componentMap['controller'] = components["ControllerComponent"];
-            this.componentMap['accellerator'] = components["AccelleratorComponent"];
-            this.componentMap['gravity'] = components["GravityComponent"];
-            this.componentMap['exhaust'] = components["ExhaustComponent"];
-            this.componentMap['rotation'] = components["RotationComponent"];
-            this.componentMap['gun'] = components["GunComponent"];
-            this.componentMap['collision'] = components["CollisionComponent"];
-            this.componentMap['explodeonkill'] = components["ExplodeOnKillComponent"];
-            this.componentMap['dieonasteroidcollision'] = components["DieOnAsteroidCollisionComponent"];
-            this.componentMap['destroyoutofbounds'] = components["DestroyOutOfBoundsComponent"];
-            this.componentMap['asteroidsize'] = components["AsteroidSizeComponent"];
-            this.componentMap['continuousrotation'] = components["ContinuousRotationComponent"];
-            this.componentMap['friction'] = components["FrictionComponent"];
-            this.componentMap['lifetime'] = components["LifetimeComponent"];
-            this.componentMap['size'] = components["SizeComponent"];
-            this.componentMap['points'] = components["PointsComponent"];
-            this.componentMap['weaponlevel'] = components["WeaponLevelComponent"];
-
             this.shapeMap = {}
             this.shapeMap['wedge'] = shapes["Wedge"];
             this.shapeMap['regularpolygon'] = shapes["RegularPolygon"];
@@ -55,7 +33,7 @@ define(["hiage.js/GameObject",
             var finalTemplate = ObjectFactory.getFinalComponentConfig(template, config);
 
             finalTemplate['shapemap'] = this.shapeMap;
-            var component = new this.componentMap[template.type](finalTemplate, this.messageDispatcher);
+            var component = ComponentFactory.createComponent(template.type, finalTemplate, this.messageDispatcher);
             component.type = template.type;
 
             return component;

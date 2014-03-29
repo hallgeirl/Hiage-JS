@@ -1,5 +1,17 @@
-function clone(obj){
-    return JSON.parse(JSON.stringify(obj));
+function clone(obj, recursed) {
+    //Check for value type
+    if (typeof (obj) != "object")
+        return obj;
+
+    var newObj = {};
+    for (var prop in obj) {
+        if (typeof (obj[prop]) == "object")
+            newObj[prop] = clone(obj[prop], true);
+        else
+            newObj[prop] = obj[prop];
+    }
+    return newObj;
+    //return JSON.parse(JSON.stringify(obj));
 }
 
 function getAngleFromDirection(direction) {

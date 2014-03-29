@@ -57,7 +57,19 @@
     <Reference Include="System.EnterpriseServices" />-->
     <Content Include="data\sound\explode.ogg" />
     <Content Include="index.html" />
+    <Content Include="src\component\AsteroidSizeComponent.js" />
+    <Content Include="src\component\ContinuousRotationComponent.js" />
+    <Content Include="src\component\WeaponLevelComponent.js" />
+    <Content Include="src\component\PointsComponent.js" />
+    <Content Include="src\component\DestroyOutOfBoundsComponent.js" />
+    <Content Include="src\component\DieOnAsteroidCollisionComponent.js" />
+    <Content Include="src\component\DieOnCollisionComponent.js" />
+    <Content Include="src\component\ExhaustComponent.js" />
+    <Content Include="src\component\ExplodeOnKillComponent.js" />
+    <Content Include="src\component\GunComponent.js" />
+    <Content Include="src\component\SizeComponent.js" />
     <Content Include="src\main.js" />
+    <Content Include="src\Stage.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,6 +107,9 @@
   <ItemGroup>
     <Content Include="data\sound\sounds.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\config.json" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -121,8 +136,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>robocopy ..\..\hiage.js\src\ ..\lib\hiage.js /MIR
-robocopy ..\src ..\lib
+    <PreBuildEvent>robocopy ..\src ..\lib /MIR
+robocopy ..\..\hiage.js\src\ ..\lib\hiage.js /MIR
 copy ..\..\hiage.js\lib\*.* ..\lib\</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

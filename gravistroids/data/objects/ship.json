@@ -1,5 +1,4 @@
 ﻿{ 
-	"type": "ship",
 	"components": [
 		{
 			"type": "shape",

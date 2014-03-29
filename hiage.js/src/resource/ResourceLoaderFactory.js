@@ -1,5 +1,5 @@
-﻿define(["hiage.js/resource/ResourceLoaderMapping"],
-    function (ResourceLoaderMapping) {
+﻿define([],
+    function () {
         function ResourceLoaderFactory() {
         }
 
@@ -13,14 +13,11 @@
         ResourceLoaderFactory.registerResourceLoader = function (resourceType, loader) {
             if (!loader.prototype["loadResource"])
                 throw "Invalid resource loader for resource type " + resourceType + ": Does not contain a loadResource function.";
+            console.log("Registered resource loader for " + resourceType);
             ResourceLoaderFactory.loaders[resourceType] = loader;
         }
 
         ResourceLoaderFactory.loaders = {};
-
-        for (var i = 0; i < ResourceLoaderMapping.length; i++) {
-            ResourceLoaderFactory.registerResourceLoader(ResourceLoaderMapping[i].type, ResourceLoaderMapping[i].loader);
-        }
 
         return ResourceLoaderFactory;
     });

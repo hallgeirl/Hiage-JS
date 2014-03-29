@@ -1,0 +1,20 @@
+﻿{
+	"modules": {
+		"components": [
+			"hiage.js/component/AccelleratorComponent",
+			"hiage.js/component/CollisionComponent",
+			"hiage.js/component/ControllerComponent",
+			"hiage.js/component/FrictionComponent",
+			"hiage.js/component/GravityComponent",
+			"hiage.js/component/LifetimeComponent",
+			"hiage.js/component/RotationComponent",
+			"hiage.js/component/ShapeComponent",
+			"hiage.js/component/SpatialComponent"
+		],
+
+		"resourceloaders": [
+			"hiage.js/resource/ObjectLoader",
+			"hiage.js/resource/AudioLoader"
+		]
+	}
+}

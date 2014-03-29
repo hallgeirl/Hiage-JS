@@ -14,6 +14,17 @@
         this.receivers[tag].push(receiver);
     }
 
+    Channel.prototype.deregisterReceiver = function (tag, receiver) {
+        if (!tag)
+            tag = Channel.NO_TAG;
+
+        if (!this.receivers[tag])
+            return;
+
+        var index = this.receivers[tag].indexOf(receiver);
+        this.receivers[tag].splice(index, 1);
+    }
+
     Channel.prototype.sendMessage = function (message, tag) {
         this.sendMessageWithTag(message, tag);
 

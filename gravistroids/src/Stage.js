@@ -1,5 +1,5 @@
 define(["hiage.js/CollisionManager",
-        "hiage.js/Message"],
+        "hiage.js/core/Message"],
     function (CollisionManager, Message) {
 
         function Stage(objectFactory, stageWidth, stageHeight, messageDispatcher) {
@@ -20,8 +20,6 @@ define(["hiage.js/CollisionManager",
             //Temporary workaround to allow components to get a hold of the stage dimensions
             Stage.stageWidth = stageWidth;
             Stage.stageHeight = stageHeight;
-
-            this.initialize();
         }
 
         Stage.prototype.initialize = function () {
@@ -74,6 +72,7 @@ define(["hiage.js/CollisionManager",
 
             for (var i = this.objects.length - 1; i >= 0; i--) {
                 if (!this.objects[i].alive) {
+                    this.objects[i].cleanup();
                     this.objects.splice(i, 1);
                 }
             }

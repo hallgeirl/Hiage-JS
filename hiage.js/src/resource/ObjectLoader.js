@@ -1,5 +1,5 @@
 ﻿define([],
-    function (ResourceLoaderFactory) {
+    function () {
         function ObjectLoader() {
         }
 
@@ -20,6 +20,8 @@
 
             return resource;
         }
+
+        ObjectLoader.getName = function () { return "object"; }
 
         return ObjectLoader;
     });

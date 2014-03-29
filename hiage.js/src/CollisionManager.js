@@ -1,4 +1,4 @@
-define(["hiage.js/Message"],
+define(["hiage.js/core/Message"],
     function (Message) {
         function CollisionManager(messageDispatcher) {
             this.collidables = [];

@@ -11,18 +11,12 @@ define([],
             objectCounter++;
 
             this.messageChannels = {};
-            this.componentMap = {};
             this.messageDispatcher.registerHandler('kill', this, this.id);
         }
 
         GameObject.prototype.addComponent = function (component) {
             this.components.push(component);
             component.owner = this;
-            this.componentMap[component.type] = component;
-        }
-
-        GameObject.prototype.getComponent = function (name) {
-            return this.componentMap[name];
         }
 
         GameObject.prototype.receiveMessage = function (message, sender) {
@@ -42,5 +36,13 @@ define([],
                 this.components[i].initialize(this.messageDispatcher);
             }
         }
+
+        GameObject.prototype.cleanup = function () {
+            for (var i = 0; i < this.components.length; i++) {
+                this.components[i].cleanup();
+            }
+            this.messageDispatcher.deregisterHandler('kill', this, this.id);
+        }
+
         return GameObject;
     });
