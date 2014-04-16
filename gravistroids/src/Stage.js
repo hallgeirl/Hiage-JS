@@ -30,14 +30,15 @@ define(["hiage.js/CollisionManager",
             this.easiness = 5;
             this.difficultyTimer = 10;
             this.spawnCounter = this.easiness;
+            this.starSpawnCounter = 2;
             this.texts = [];
             this.scoreText = {
                 x: 20,
-                y: 25,
+                y: 0,
                 text: 'Score: 0',
                 fontSize: 30,
                 fontFamily: 'Calibri',
-                fill: 'black'
+                fill: [1,1,1,1]
             };
             this.experienceText = {
                 x: 20,
@@ -45,11 +46,18 @@ define(["hiage.js/CollisionManager",
                 text: 'XP: 0/2000',
                 fontSize: 30,
                 fontFamily: 'Calibri',
-                fill: 'black'
+                fill: [1, 1, 1, 1]
             };
             this.texts.push(this.scoreText);
             this.texts.push(this.experienceText);
-            this.spawnObject('ship', { position: { x: this.stageWidth / 2, y: this.stageHeight * 0.8 } });
+            this.spawnObject('ship', { position: [this.stageWidth / 2, this.stageHeight * 0.2] });
+
+            for (var i = 0; i < 100; i++) {
+                this.spawnObject("star", {
+                    position: [Math.random() * this.stageWidth, Math.random() * this.stageHeight],
+                    velocity: [0, -100 * Math.random()-50]
+                });
+            }
         }
 
         Stage.prototype.destroy = function () {
@@ -80,15 +88,22 @@ define(["hiage.js/CollisionManager",
             this.spawnCounter -= frametime;
             if (this.spawnCounter <= 0) {
                 this.spawnCounter = this.easiness;
-                var size = Math.ceil(Math.random() * 4);
-                this.spawnObject('asteroid', {
-                    position: { x: Math.random() * this.stageWidth, y: -100 },
-                    size: size,
-                    velocity: { x: Math.random() * 100 - 50, y: Math.random() * 50 },
-                    points: 100 * size
+                var size = Math.floor(Math.random() * 3)
+                var asteroids = ["asteroid_small", "asteroid_medium", "asteroid_large"];
+                this.spawnObject(asteroids[size], {
+                    position: [ Math.random() * this.stageWidth, this.stageHeight+100 ],
+                    velocity: [ Math.random() * 100 - 50, -200 ]
                 });
             }
 
+            this.starSpawnCounter--;
+            if (this.starSpawnCounter <= 0) {
+                this.spawnObject("star", {
+                    position: [Math.random() * this.stageWidth, this.stageHeight],
+                    velocity: [0, -100 * Math.random()-50]
+                });
+                this.starSpawnCounter = 3;
+            }
 
             this.gameTime += frametime;
             this.difficultyTimer -= frametime;
@@ -137,7 +152,7 @@ define(["hiage.js/CollisionManager",
                 text: 'Game over!',
                 fontSize: 70,
                 fontFamily: 'Calibri',
-                fill: 'black',
+                fill: [1,1,1,1],
                 align: 'center'
             };
             var gameOverText2 = {
@@ -146,7 +161,7 @@ define(["hiage.js/CollisionManager",
                 text: 'Game restarts in 5 seconds.',
                 fontSize: 20,
                 fontFamily: 'Calibri',
-                fill: 'black',
+                fill: [1,1,1,1],
                 align: 'center'
             };
             this.texts.push(gameOverText);

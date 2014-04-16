@@ -5,7 +5,7 @@
             this.angle = config.initial;
             this.angleDiff = 0;
             this.rotationSpeed = config.speed;
-            this.position = { x: 0, y: 0 };
+            this.position = [0, 0];
             this.registerMessage('control');
             this.registerMessage('move');
             this.registerMessage('rotate-left');
@@ -22,7 +22,9 @@
                 switch (message.data.button) {
                     case 'mouseright':
                     case 'mouseleft':
-                        var direction = vectorNormalize(vectorDifference(message.data.position, this.position));
+                        var diff = vectorDifference(message.data.position, this.position);
+                        var direction = vectorNormalize(diff)
+                        
                         var angle = getAngleFromDirection(direction);
                         this.angleDiff = angle - this.angle;
                         break;

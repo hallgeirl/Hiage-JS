@@ -1,29 +1,12 @@
 ﻿{ 
 	"components": [
 		{
-			"type": "shape",
-			"shape": 
-			{
-				"type": "wedge",
-				"sides": 3, "radius": 30,
-				"fill": "red",
-				"stroke": "black",
-				"strokeWidth": 2,
-				"angle": 0.78539816339744830962,
-				"offset": [-15,-7]
-			},
-			"rotation": 3.55
+			"type": "sprite",
+			"sprite": "ship",
+			"scale": 0.15
 		},
 		{
-			"type": "spatial",
-			"velocity": 
-			{
-				"x": 0, "y": 0
-			},
-			"position":
-			{
-				"x": 0, "y": 0
-			}
+			"type": "spatial"
 		},
 		{
 			"type": "controller"
@@ -34,15 +17,15 @@
 		},
 		{
 			"type": "gravity",
-			"magnitude": -98.8
+			"magnitude": 98.8
 		},
 		{
 			"type": "exhaust",
-			"pipes": 3
+			"pipes": 5
 		},
 		{
 			"type": "rotation",
-			"initial": 1.57079632679489661923,
+			"initial": -1.57079632679489661923,
 			"speed": 0.05
 		},
 		{
@@ -82,11 +65,12 @@
 			"sound": "gun"
 		},
 		{
-			"type": "collision"
+			"type": "collision",
+			"radius": 25
 		},
 		{
 			"type": "explodeonkill",
-			"particlesize": 20,
+			"particlesize": 2,
 			"particlecount": 100,
 			"size": 5,
 			"sound": "explode3"

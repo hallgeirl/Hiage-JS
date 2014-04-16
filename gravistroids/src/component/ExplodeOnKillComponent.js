@@ -5,7 +5,7 @@
             this.particleSize = config.particlesize;
             this.particleCount = config.particlecount;
             this.explosionSize = config.size;
-            this.position = { x: 0, y: 0 };
+            this.position = [0,0]
             this.sound = config.sound;
             this.registerMessage('kill');
             this.registerMessage('move');
@@ -17,10 +17,11 @@
             if (message.subject == 'kill' && (message.data == null || message.data.mode != 'final')) {
                 for (var i = 0; i < this.particleCount; i++) {
                     this.messageDispatcher.sendMessage(new Message('create-particle', {
+                        type: "ricochet-particle",
                         position: this.position,
                         angle: 0,
-                        speed: this.particleSize * 50 * (Math.random() + 0.5),
-                        size: Math.random() * this.particleSize,
+                        speed: 500 * (Math.random() + 0.5),
+                        scale: Math.random() * this.particleSize,
                         lifetime: this.explosionSize,
                         randomizeAngle: Math.PI * 2
                     }));

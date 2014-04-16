@@ -7,7 +7,7 @@
 
         GravityComponent.prototype = new Component();
         GravityComponent.prototype.update = function (frameTime) {
-            this.sendMessage(new Message('accel', { x: 0, y: -this.gravity * frameTime }));
+            this.sendMessage(new Message('accel', { vector: [0, -this.gravity * frameTime] } ));
         }
 
         GravityComponent.getName = function () { return "gravity"; }

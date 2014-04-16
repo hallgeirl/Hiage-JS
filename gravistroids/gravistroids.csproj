@@ -56,9 +56,20 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />-->
     <Content Include="data\sound\explode.ogg" />
+    <Content Include="data\sprites\asteroids.json" />
+    <Content Include="data\objects\asteroid_medium.json" />
+    <Content Include="data\objects\asteroid_large.json" />
+    <Content Include="data\sprites\bullet.json" />
+    <Content Include="data\sprites\particle.json" />
+    <Content Include="data\objects\ricochet-particle.json" />
+    <Content Include="data\objects\star.json" />
+    <None Include="data\sprites\ship.json" />
+    <Content Include="data\textures\asteroids.png" />
+    <Content Include="data\textures\ship.png" />
     <Content Include="index.html" />
     <Content Include="src\component\AsteroidSizeComponent.js" />
     <Content Include="src\component\ContinuousRotationComponent.js" />
+    <Content Include="src\component\ParticleColorComponent.js" />
     <Content Include="src\component\WeaponLevelComponent.js" />
     <Content Include="src\component\PointsComponent.js" />
     <Content Include="src\component\DestroyOutOfBoundsComponent.js" />
@@ -67,7 +78,6 @@
     <Content Include="src\component\ExhaustComponent.js" />
     <Content Include="src\component\ExplodeOnKillComponent.js" />
     <Content Include="src\component\GunComponent.js" />
-    <Content Include="src\component\SizeComponent.js" />
     <Content Include="src\main.js" />
     <Content Include="src\Stage.js" />
   </ItemGroup>
@@ -99,16 +109,22 @@
     <Content Include="data\objects\bullet.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="data\objects\asteroid.json" />
+    <Content Include="data\objects\asteroid_small.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="data\objects\particle.json" />
+    <Content Include="data\objects\exhaust-particle.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\sound\sounds.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="src\config.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\sprites\sprites.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\textures\textures.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

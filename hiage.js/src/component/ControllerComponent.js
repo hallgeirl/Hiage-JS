@@ -5,7 +5,7 @@
             this.registerMessage('mousemove', null);
 
             this.pressed = {};
-            this.mouse = { left: false, right: false, position: { x: 0, y: 0 } };
+            this.mouse = { left: false, right: false, position: [0, 0] };
             var that = this;
             window.addEventListener('keydown', function (evt) {
                 that.pressed[evt.keyCode] = true;

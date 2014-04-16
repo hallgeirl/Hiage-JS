@@ -2,7 +2,7 @@
     function (Message, Component) {
         function GunComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.position = { x: 0, y: 0 };
+            this.position = [0,0]
             this.rotation = 0;
             this.fire = false;
             this.cooldownTimer = 0;

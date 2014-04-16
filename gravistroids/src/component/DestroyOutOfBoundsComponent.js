@@ -2,7 +2,7 @@
     function (Message, Component, Stage) {
         function DestroyOutOfBoundsComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.position = { x: 0, y: 0 };
+            this.position = [0,0]
             this.registerMessage('move');
         }
 
@@ -14,8 +14,8 @@
         }
 
         DestroyOutOfBoundsComponent.prototype.update = function (frameTime) {
-            if (this.position.x < -200 || this.position.x > Stage.stageWidth + 200 ||
-                this.position.y < -200 || this.position.y > Stage.stageHeight + 200) {
+            if (this.position[0] < -200 || this.position[0] > Stage.stageWidth + 200 ||
+                this.position[1] < -200 || this.position[1] > Stage.stageHeight + 200) {
                 this.sendMessage(new Message('kill', { mode: 'final' }, this));
             }
 

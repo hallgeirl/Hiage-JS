@@ -41,14 +41,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="lib\glMatrix-0.9.5.min.js" />
     <Content Include="src\component\AccelleratorComponent.js" />
     <Content Include="src\component\CollisionComponent.js" />
     <Content Include="src\component\ControllerComponent.js" />
+    <Content Include="src\component\SpriteComponent.js" />
     <Content Include="src\component\FrictionComponent.js" />
     <Content Include="src\component\GravityComponent.js" />
     <Content Include="src\component\LifetimeComponent.js" />
     <Content Include="src\component\RotationComponent.js" />
-    <Content Include="src\component\ShapeComponent.js" />
     <Content Include="src\component\SpatialComponent.js" />
     <Content Include="src\config.json" />
   </ItemGroup>
@@ -67,14 +68,14 @@
     <Content Include="src\core\Message.js" />
     <Content Include="src\core\MessageDispatcher.js" />
     <Content Include="src\core\ObjectFactory.js" />
-    <Content Include="src\Renderer.js" />
-    <Content Include="src\resource\AllResourceLoaders.js" />
+    <Content Include="src\render\WebGLRenderer.js" />
     <Content Include="src\resource\AudioLoader.js" />
     <Content Include="src\resource\ObjectLoader.js" />
     <Content Include="src\resource\Resource.js" />
     <Content Include="src\resource\ResourceLoaderFactory.js" />
     <Content Include="src\resource\ResourceManager.js" />
-    <Content Include="src\Shapes.js" />
+    <Content Include="src\resource\SpriteLoader.js" />
+    <Content Include="src\resource\TextureLoader.js" />
     <Content Include="src\Util.js" />
   </ItemGroup>
   <ItemGroup>

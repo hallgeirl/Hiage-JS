@@ -2,20 +2,25 @@
     function (Message, Component) {
         function CollisionComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.position = { x: 0, y: 0 };
-            this.shape = null;
-            this.registerMessage('shape');
+            this.registerMessage('move');
             this.registerMessage('kill');
+            this.collisionBox = {
+                position: [0, 0],
+                radius: config.radius
+            }
         }
 
         CollisionComponent.prototype = new Component();
 
+        CollisionComponent.prototype.initialize = function () {
+            this.messageDispatcher.sendMessage(new Message('register-collision-target', { collisionBox: this.collisionBox, object: this.owner }));
+        }
+
         CollisionComponent.prototype.receiveMessage = function (message) {
-            if (message.subject == 'shape') {
-                this.shape = message.data;
-                this.messageDispatcher.sendMessage(new Message('unregister-collision-target', this.owner));
-                this.messageDispatcher.sendMessage(new Message('register-collision-target', { shape: this.shape, object: this.owner }));
-            } else if (message.subject == 'kill') {
+            if (message.subject == "move") {
+                this.collisionBox.position = [message.data[0], message.data[1]];
+            }
+            if (message.subject == 'kill') {
                 this.messageDispatcher.sendMessage(new Message('unregister-collision-target', this.owner));
             }
         }

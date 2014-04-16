@@ -37,6 +37,8 @@
                 this.resources[type] = {};
 
             this.resources[type][name] = new Resource(type, path, name);
+            var loader = ResourceLoaderFactory.getResourceLoader(type);
+            this.resources[type][name].load(loader);
         }
 
         ResourceManager.prototype.getResource = function (type, name) {

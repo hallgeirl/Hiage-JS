@@ -12,8 +12,8 @@
 			"component/ExplodeOnKillComponent",
 			"component/GunComponent",
 			"component/PointsComponent",
-			"component/SizeComponent",
-			"component/WeaponLevelComponent"
+			"component/WeaponLevelComponent",
+			"component/ParticleColorComponent"
 		]
 	}
 }

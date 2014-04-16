@@ -8,13 +8,15 @@
 			"hiage.js/component/GravityComponent",
 			"hiage.js/component/LifetimeComponent",
 			"hiage.js/component/RotationComponent",
-			"hiage.js/component/ShapeComponent",
-			"hiage.js/component/SpatialComponent"
+			"hiage.js/component/SpatialComponent",
+			"hiage.js/component/SpriteComponent"
 		],
 
 		"resourceloaders": [
 			"hiage.js/resource/ObjectLoader",
-			"hiage.js/resource/AudioLoader"
+			"hiage.js/resource/AudioLoader",
+			"hiage.js/resource/TextureLoader",
+			"hiage.js/resource/SpriteLoader"
 		]
 	}
 }

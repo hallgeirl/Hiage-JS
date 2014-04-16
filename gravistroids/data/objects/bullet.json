@@ -1,23 +1,11 @@
 ﻿{
-    "type": "bullet", 
     "components": [
+		{
+			"type": "sprite",
+			"sprite": "bullet"
+		},
         {
-            "type": "shape",
-            "shape": 
-            {
-                "type": "regularpolygon",
-                "sides": 3, 
-				"radius": 4,
-                "fill": "black",
-                "stroke": "none",
-                "strokeWidth": 0
-            },
-            "rotation": 0
-        },
-        {
-            "type": "spatial",
-            "velocity": { "x": 0, "y": 0 },
-            "position": { "x": 0, "y": 0 }
+            "type": "spatial"
         },
         {
             "type": "rotation",
@@ -25,11 +13,12 @@
             "speed": 0
         },
         {
-            "type": "collision"
+            "type": "collision",
+			"radius": 16
         },
         {
             "type": "explodeonkill",
-            "particlesize": 5,
+            "particlesize": 0.1,
             "particlecount": 5,
             "size": 1,
             "sound": "explode2"

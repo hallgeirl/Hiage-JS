@@ -3,6 +3,10 @@ function clone(obj, recursed) {
     if (typeof (obj) != "object")
         return obj;
 
+    if (obj instanceof Array) {
+        return cloneArray(obj);
+    }
+    
     var newObj = {};
     for (var prop in obj) {
         if (typeof (obj[prop]) == "object")
@@ -11,46 +15,54 @@ function clone(obj, recursed) {
             newObj[prop] = obj[prop];
     }
     return newObj;
-    //return JSON.parse(JSON.stringify(obj));
+}
+
+function cloneArray(obj) {
+    var result = []
+    for (var i = 0; i < obj.length; i++) {
+        result.push(clone(obj[i]));
+    }
+
+    return result;
 }
 
 function getAngleFromDirection(direction) {
-	var angle = Math.acos(direction.x);
-	if (Math.sin(direction.y) > 0)
+	var angle = Math.acos(direction[0]);
+	if (Math.sin(direction[1]) > 0)
 		angle = 2*Math.PI - angle;
 	
 	return angle;
 }
 
 function getDirectionFromAngle(angle) {
-	return {x: Math.cos(angle), y: -Math.sin(angle)};
+	return [Math.cos(angle), -Math.sin(angle)];
 }
 
 function vectorAdd(vector1, vector2) {
-    return { x: vector1.x+vector2.x, y: vector1.y+vector2.y };
+    return [vector1[0]+vector2[0], vector1[1]+vector2[1]];
 }
 
 function vectorLength(vector) {
-	return Math.sqrt(vector.x*vector.x+vector.y*vector.y);
+	return Math.sqrt(vector[0]*vector[0]+vector[1]*vector[1]);
 }
 
 function vectorDot(vector1, vector2) {
-	return vector1.x*vector2.x+vector1.y*vector2.y;
+	return vector1[0]*vector2[0]+vector1[1]*vector2[1];
 }
 
 function vectorNormalize(vector) {
 	var length = vectorLength(vector);
-	return {x: vector.x/length, y: vector.y/length};
+	return [vector[0]/length, vector[1]/length];
 }
 
 function vectorInvert(vector) {
-	return {x:-vector.x, y:-vector.y};
+    return [-vector[0], -vector[1]];
 }
 
 function vectorScale(vector, scalar) {
-	return {x:vector.x*scalar, y:vector.y*scalar};
+	return [vector[0]*scalar, vector[1]*scalar];
 }
 
 function vectorDifference(vector1, vector2) {
-	return {x:vector1.x-vector2.x, y:vector1.y-vector2.y};
+    return [vector1[0] - vector2[0], vector1[1] - vector2[1]];
 }

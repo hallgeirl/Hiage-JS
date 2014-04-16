@@ -1,26 +1,15 @@
 ﻿{
-    "type": "asteroid", 
     "components": [
+		{
+			"type": "sprite",
+			"sprite": "asteroids"
+		},
         {
-            "type": "shape",
-            "shape": 
-            {
-                "type": "regularpolygon",
-                "sides": "$Math.floor((Math.random()*10)+5)", 
-				"radius": 25,
-                "fill": "gray",
-                "stroke": "black",
-                "strokeWidth": 2
-            } 
-        },
-        {
-            "type": "spatial",
-            "velocity": { "x": 0, "y": 0 },
-            "position": { "x": 0, "y": 0 }
+            "type": "spatial"
         },
         {
             "type": "gravity",
-            "magnitude": -98.8
+            "magnitude": 98.8
         },
         {
             "type": "rotation",
@@ -29,18 +18,19 @@
         },
         {
             "type": "asteroidsize",
-            "size": 1
+            "size": 3
         },
         {
             "type": "continuousrotation",
             "direction": "$Math.random()-0.5"
         },
         {
-            "type": "collision"
+            "type": "collision",
+			"radius": 64
         },
         {
             "type": "explodeonkill",
-            "particlesize": 5,
+            "particlesize": 1,
             "particlecount": 5,
             "size": 0.5,
             "sound": "explode"
@@ -50,7 +40,7 @@
         },
         {
             "type": "points",
-            "points": 100
+            "points": 400
         }
     ]
 }

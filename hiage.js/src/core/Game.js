@@ -1,6 +1,6 @@
 define(["hiage.js/audio/AudioSystem",
         "hiage.js/core/MessageDispatcher",
-        "hiage.js/Renderer",
+        "hiage.js/render/WebGLRenderer",
         "hiage.js/core/Message",
         "hiage.js/resource/ResourceManager",
         "hiage.js/core/ObjectFactory",
@@ -9,20 +9,16 @@ define(["hiage.js/audio/AudioSystem",
     function (AudioSystem, MessageDispatcher, Renderer, Message, ResourceManager, ObjectFactory, ComponentFactory) {
         function Game(container, height, aspectRatio, layers, resourceFile) {
             this.messageDispatcher = new MessageDispatcher();
-            this.renderer = new Renderer(this.messageDispatcher, container, height, aspectRatio);
             this.resourceManager = new ResourceManager();
             this.resourceManager.loadResources(resourceFile);
+            this.renderer = new Renderer(this.messageDispatcher, this.resourceManager, container, height, aspectRatio);
             this.audioSystem = new AudioSystem(this.resourceManager, 32, this.messageDispatcher);
-            this.container = container;
+            this.$container = $("#" + container);
             this.aspectRatio = aspectRatio;
             this.frameRate = 50;
             this.intervalId = null;
-            this.stageHeight = height;
-            this.layers = [];
-
             this.scaleSceneToWindow();
             this.attachEventListeners();
-            this.componentFactory = new ComponentFactory(this.messageDispatcher);
             this.objectFactory = new ObjectFactory(this.resourceManager, this.messageDispatcher);
             this.gamestates = []
             
@@ -54,21 +50,14 @@ define(["hiage.js/audio/AudioSystem",
                 width = window.innerWidth;
                 height = width / this.aspectRatio;
             }
-            this.scaleScene(width, height);
-        }
-
-        Game.prototype.scaleScene = function (width, height) {
-            this.renderer.setScale(height / this.stageHeight);
-            this.renderer.resizeCanvas(width, height);
-            $('#' + this.container).attr('width', width);
-            $('#' + this.container).attr('height', height);
-
-            $('#' + this.container + '_size').text('#' + this.container + ' { width: ' + width + 'px; height: ' + height + 'px; }');
+            
+            this.messageDispatcher.sendMessage(new Message("scene-resized", { width: width, height: height }));
         }
 
         function touchMove(that, e) {
-            var scale = that.renderer.getScale();
-            that.messageDispatcher.sendMessage(new Message('mousemove', { x: e.targetTouches[0].pageX / scale, y: e.targetTouches[0].pageY / scale }, that));
+            //var scale = that.renderer.getScale();
+            var scale = 1;
+            that.messageDispatcher.sendMessage(new Message('mousemove', [ e.targetTouches[0].pageX / scale, e.targetTouches[0].pageY / scale ], that));
         }
 
         Game.prototype.attachEventListeners = function () {
@@ -77,18 +66,18 @@ define(["hiage.js/audio/AudioSystem",
                 that.scaleSceneToWindow();
             });
             window.addEventListener('mousemove', function (e) {
-                var scale = that.renderer.getScale();
                 var offsetX = e.offsetX == undefined ? e.layerX : e.offsetX;
                 var offsetY = e.offsetY == undefined ? e.layerY : e.offsetY;
-                that.messageDispatcher.sendMessage(new Message('mousemove', { x: offsetX / scale, y: offsetY / scale }, that));
+                var offs = that.renderer.screenToSceneCoordinates([offsetX, offsetY], [that.$container.height()*that.aspectRatio, that.$container.height()])
+                that.messageDispatcher.sendMessage(new Message('mousemove', [offs[0], offs[1]], that));
             });
-            window.addEventListener('touchmove', function (e) {
+            this.$container.on('touchmove', function (e) {
                 touchMove(that, e);
             });
-            window.addEventListener('touchstart', function (e) {
+            this.$container.on('touchstart', function (e) {
                 touchMove(that, e);
             });
-            window.addEventListener('contextmenu', function (evt) {
+            this.$container.on('contextmenu', function (evt) {
                 if (evt.button == 2) {
                     evt.preventDefault();
                 }
@@ -110,7 +99,6 @@ define(["hiage.js/audio/AudioSystem",
                     this.timer = new Date();
                 }
 
-                this.renderer.clear();
                 var that = this;
 
                 if (this.gamestates.length > 0)

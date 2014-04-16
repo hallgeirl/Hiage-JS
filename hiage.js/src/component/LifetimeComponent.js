@@ -6,8 +6,14 @@
         }
 
         LifetimeComponent.prototype = new Component();
+
+        LifetimeComponent.prototype.initialize = function () {
+            this.sendMessage(new Message("lifetime", this.lifetime));
+        }
+
         LifetimeComponent.prototype.update = function (frameTime) {
             this.lifetime -= frameTime;
+            
             if (this.lifetime <= 0) {
                 this.sendMessage(new Message('kill', null, this));
             }

@@ -1,17 +1,12 @@
 define(["hiage.js/core/GameObject",
         "hiage.js/component/ComponentFactory",
-        "hiage.js/Shapes",
         "hiage.js/core/Message",
         "hiage.js/Util"],
-    function (GameObject, ComponentFactory, shapes, Message) {
+    function (GameObject, ComponentFactory, Message) {
 
         function ObjectFactory(resourceManager, messageDispatcher) {
             this.messageDispatcher = messageDispatcher;
             this.resourceManager = resourceManager;
-            this.shapeMap = {}
-            this.shapeMap['wedge'] = shapes["Wedge"];
-            this.shapeMap['regularpolygon'] = shapes["RegularPolygon"];
-            this.shapeMap['circle'] = shapes["Circle"];
         }
 
         ObjectFactory.prototype.createObject = function (type, config) {
@@ -32,8 +27,7 @@ define(["hiage.js/core/GameObject",
         ObjectFactory.prototype.createComponent = function (template, config) {
             var finalTemplate = ObjectFactory.getFinalComponentConfig(template, config);
 
-            finalTemplate['shapemap'] = this.shapeMap;
-            var component = ComponentFactory.createComponent(template.type, finalTemplate, this.messageDispatcher);
+            var component = ComponentFactory.createComponent(template.type, finalTemplate, this.messageDispatcher, this.resourceManager);
             component.type = template.type;
 
             return component;
@@ -62,7 +56,7 @@ define(["hiage.js/core/GameObject",
                 velocity = vectorAdd(velocity, config.ownerVelocity);
             config.velocity = velocity;
 
-            this.messageDispatcher.sendMessage(new Message('spawn', { type: 'particle', config: config }));
+            this.messageDispatcher.sendMessage(new Message('spawn', { type: config.type, config: config }));
         }
         return ObjectFactory;
     });

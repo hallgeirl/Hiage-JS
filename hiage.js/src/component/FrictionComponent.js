@@ -3,36 +3,36 @@
         function FrictionComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
             this.magnitude = config.friction;
-            this.velocity = { x: 0, y: 0 };
+            this.velocity = [ 0, 0 ];
             this.registerMessage('speed');
         }
 
         FrictionComponent.prototype = new Component();
         FrictionComponent.prototype.receiveMessage = function (message) {
             if (message.subject == 'speed') {
-                this.velocity.x = message.data.x;
-                this.velocity.y = message.data.y;
+                this.velocity[0] = message.data[0];
+                this.velocity[1] = message.data[1];
             }
         }
 
         FrictionComponent.prototype.update = function (frameTime) {
             var x, y;
 
-            if (this.velocity.x == 0 && this.velocity.y == 0)
+            if (this.velocity[0] == 0 && this.velocity[1] == 0)
                 return;
 
             var direction = vectorInvert(vectorNormalize(this.velocity));
-            if (this.velocity.x > 0)
-                x = Math.max(direction.x * this.magnitude * frameTime, -this.velocity.x);
+            if (this.velocity[0] > 0)
+                x = Math.max(direction[0] * this.magnitude * frameTime, -this.velocity[0]);
             else
-                x = Math.min(direction.x * this.magnitude * frameTime, -this.velocity.x);
+                x = Math.min(direction[0] * this.magnitude * frameTime, -this.velocity[0]);
 
-            if (this.velocity.y > 0)
-                y = Math.max(direction.y * this.magnitude * frameTime, -this.velocity.y);
+            if (this.velocity[1] > 0)
+                y = Math.max(direction[1] * this.magnitude * frameTime, -this.velocity[1]);
             else
-                y = Math.min(direction.y * this.magnitude * frameTime, -this.velocity.y);
+                y = Math.min(direction[1] * this.magnitude * frameTime, -this.velocity[1]);
 
-            this.sendMessage(new Message('accel', { x: x, y: y }, this));
+            this.sendMessage(new Message('accel', { vector: [x, y] }, this));
         }
 
         FrictionComponent.getName = function () { return "friction"; }

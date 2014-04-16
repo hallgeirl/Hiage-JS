@@ -2,24 +2,27 @@
     function (Message, Component) {
         function SpatialComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.position = config.position;
-            this.velocity = config.velocity;
+            this.position = [config.position[0], config.position[1]];
+            this.velocity = [0, 0];
+            if (config.velocity)
+                this.velocity = [config.velocity[0], config.velocity[1]];
             this.registerMessage("accel", this.messageTag);
         }
 
         SpatialComponent.prototype = new Component();
         SpatialComponent.prototype.update = function (frameTime) {
-            this.position.x += this.velocity.x * frameTime;
-            this.position.y += this.velocity.y * frameTime;
+            this.position[0] += this.velocity[0] * frameTime;
+            this.position[1] += this.velocity[1] * frameTime;
 
-            this.sendMessage(new Message('move', { x: this.position.x, y: this.position.y }, this));
-            this.sendMessage(new Message('speed', { x: this.velocity.x, y: this.velocity.y }, this));
+            this.sendMessage(new Message('move', [ this.position[0], this.position[1] ], this));
+            this.sendMessage(new Message('speed', [ this.velocity[0], this.velocity[1] ], this));
         }
 
         SpatialComponent.prototype.receiveMessage = function (message) {
             if (message.subject == 'accel') {
-                this.velocity.x += message.data.x;
-                this.velocity.y += message.data.y;
+                
+                this.velocity[0] += message.data.vector[0];
+                this.velocity[1] += message.data.vector[1];
             }
         }
 

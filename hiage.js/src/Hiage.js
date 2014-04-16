@@ -13,6 +13,11 @@ requirejs.config({
     }
 })
 
+var glMatrix = document.createElement("script")
+glMatrix.setAttribute("src", "lib/glMatrix-0.9.5.min.js");
+glMatrix.setAttribute("type", "text/javascript");
+document.head.appendChild(glMatrix);
+
 define(["hiage.js/Configuration", "hiage.js/component/ComponentFactory", "hiage.js/resource/ResourceLoaderFactory"],
     function (Configuration, ComponentFactory, ResourceLoaderFactory) {
 
