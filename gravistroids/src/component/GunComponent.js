@@ -3,12 +3,12 @@
         function GunComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
             this.position = [0,0]
-            this.rotation = 0;
+            this.rotation = { value: 0 };
             this.fire = false;
             this.cooldownTimer = 0;
             this.sound = config.sound;
-            this.registerMessage('move');
-            this.registerMessage('rotate');
+            this.registerMessage('position');
+            this.registerMessage('rotation');
             this.registerMessage('control');
             this.registerMessage('set-weapon-level');
             this.levels = config.levels;
@@ -17,9 +17,9 @@
 
         GunComponent.prototype = new Component();
         GunComponent.prototype.receiveMessage = function (message) {
-            if (message.subject == 'move') {
+            if (message.subject == 'position') {
                 this.position = message.data;
-            } else if (message.subject == 'rotate') {
+            } else if (message.subject == 'rotation') {
                 this.rotation = message.data;
             } else if (message.subject == 'control' && (message.data.button == 'ctrl' || message.data.button == 'mouseleft')) {
                 this.fire = true;
@@ -42,7 +42,7 @@
 
             if (this.fire && this.cooldownTimer <= 0) {
                 for (var i = 0; i < this.barrels; i++) {
-                    var finalAngle = this.rotation + this.spread * Math.random() - this.spread / 2;
+                    var finalAngle = this.rotation.value + this.spread * Math.random() - this.spread / 2;
                     this.messageDispatcher.sendMessage(new Message('spawn', { type: 'bullet', config: { position: this.position, velocity: vectorScale(getDirectionFromAngle(finalAngle), 800), initial: finalAngle } }, this));
                 }
                 if (this.sound)
@@ -51,6 +51,11 @@
             }
 
             this.fire = false;
+        }
+
+        GunComponent.prototype.cleanup = function () {
+            this.position = null;
+            Component.prototype.cleanup.call(this);
         }
 
         GunComponent.getName = function () { return "gun"; }

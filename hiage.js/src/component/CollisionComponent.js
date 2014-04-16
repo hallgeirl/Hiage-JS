@@ -2,7 +2,7 @@
     function (Message, Component) {
         function CollisionComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.registerMessage('move');
+            this.registerMessage('position');
             this.registerMessage('kill');
             this.collisionBox = {
                 position: [0, 0],
@@ -17,12 +17,15 @@
         }
 
         CollisionComponent.prototype.receiveMessage = function (message) {
-            if (message.subject == "move") {
-                this.collisionBox.position = [message.data[0], message.data[1]];
-            }
-            if (message.subject == 'kill') {
+            if (message.subject == "position")
+                this.collisionBox.position = message.data;
+            else if (message.subject == 'kill')
                 this.messageDispatcher.sendMessage(new Message('unregister-collision-target', this.owner));
-            }
+        }
+
+        CollisionComponent.prototype.cleanup = function () {
+            this.collisionBox.position = null;
+            Component.prototype.cleanup.call(this);
         }
 
         CollisionComponent.getName = function () { return "collision"; }

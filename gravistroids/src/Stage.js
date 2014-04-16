@@ -64,6 +64,11 @@ define(["hiage.js/CollisionManager",
             for (var i = 0; i < this.objects.length; i++) {
                 this.messageDispatcher.sendMessage(new Message('kill', { mode: 'final' }, this), this.objects[i].id);
             }
+
+            for (var i = this.objects.length - 1; i >= 0; i--) {
+                this.objects[i].cleanup();
+                this.objects.splice(i, 1);
+            }
         }
 
         Stage.prototype.restart = function () {

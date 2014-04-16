@@ -275,6 +275,7 @@
             sp.pMatrixUniform = gl.getUniformLocation(sp, "uPMatrix");
             sp.mvMatrixUniform = gl.getUniformLocation(sp, "uMVMatrix");
             sp.colorUniform = gl.getUniformLocation(sp, "uColor");
+            sp.samplerUniform = gl.getUniformLocation(sp, "uSampler")
 
             this.shaderProgram = sp;
         }
@@ -319,10 +320,13 @@
 
         WebGLRenderer.prototype.bindTexture = function (texture) {
             var gl = this.context;
+            if (this.boundTexture == texture)
+                return;
 
+            this.boundTexture = texture;
             gl.activeTexture(gl.TEXTURE0);
             gl.bindTexture(gl.TEXTURE_2D, texture);
-            gl.uniform1i(gl.getUniformLocation(this.shaderProgram, "uSampler"), 0);
+            gl.uniform1i(this.shaderProgram.samplerUniform, 0);
         }
 
         WebGLRenderer.prototype.createGLTexture = function (image, texture) {

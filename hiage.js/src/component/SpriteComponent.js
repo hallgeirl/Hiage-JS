@@ -8,7 +8,7 @@
                 animation: "",
                 frameTimer: 0,
                 frame: 0,
-                rotation: 0,
+                rotation: { value: 0 },
                 position: [0, 0],
                 scale: 1,
                 color: [1, 1, 1, 1],
@@ -30,8 +30,8 @@
             if (!this.rotationOffset)
                 this.rotationOffset = 0;
 
-            this.registerMessage('move');
-            this.registerMessage('rotate');
+            this.registerMessage('position');
+            this.registerMessage('rotation');
             this.registerMessage('set-color');
         }
 
@@ -42,12 +42,10 @@
         }
 
         SpriteComponent.prototype.receiveMessage = function (message) {
-            if (message.subject == 'move') {
-                this.spriteState.position[0] = message.data[0];
-                this.spriteState.position[1] = message.data[1];
-            }
-            else if (message.subject == 'rotate')
-                this.spriteState.rotation = -message.data - this.rotationOffset;
+            if (message.subject == 'position')
+                this.spriteState.position = message.data;
+            else if (message.subject == 'rotation')
+                this.spriteState.rotation = message.data;
             else if (message.subject == "set-color")
                 this.spriteState.color = message.data;
         }
@@ -56,7 +54,7 @@
             var messagedata = {
                 name: this.spriteState.name,
                 position: this.spriteState.position,
-                rotation: this.spriteState.rotation,
+                rotation: -this.spriteState.rotation.value + this.rotationOffset,
                 scale: this.spriteState.scale,
                 frame: this.spriteState.frame,
                 animation: this.spriteState.animation,
@@ -66,6 +64,12 @@
             }
 
             this.sendMessage(new Message('render-sprite', messagedata), null);
+        }
+
+        SpriteComponent.prototype.cleanup = function () {
+            this.spriteState.position = null;
+            this.spriteState.color = null;
+            Component.prototype.cleanup.call(this);
         }
 
         SpriteComponent.getName = function () { return "sprite"; }

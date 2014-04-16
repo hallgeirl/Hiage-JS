@@ -4,11 +4,17 @@
             Component.call(this, config, messageDispatcher);
             this.particleSize = config.particlesize;
             this.particleCount = config.particlecount;
-            this.explosionSize = config.size;
+            this.particleLifetime = config.particleLifetime;
+            if (!this.particleLifetime)
+                this.particleLifetime = 1;
+
+            this.particleSpeed = 500;
+            if (config.particleSpeed)
+                this.particleSpeed = config.particleSpeed;
             this.position = [0,0]
             this.sound = config.sound;
             this.registerMessage('kill');
-            this.registerMessage('move');
+            this.registerMessage('position');
         }
 
         ExplodeOnKillComponent.prototype = new Component();
@@ -20,17 +26,22 @@
                         type: "ricochet-particle",
                         position: this.position,
                         angle: 0,
-                        speed: 500 * (Math.random() + 0.5),
+                        speed: this.particleSpeed * (Math.random() + 0.5),
                         scale: Math.random() * this.particleSize,
-                        lifetime: this.explosionSize,
+                        lifetime: this.particleLifetime,
                         randomizeAngle: Math.PI * 2
                     }));
                 }
                 if (this.sound)
                     this.messageDispatcher.sendMessage(new Message('play-sound', this.sound));
-            } else if (message.subject == 'move') {
+            } else if (message.subject == 'position') {
                 this.position = message.data;
             }
+        }
+
+        ExplodeOnKillComponent.prototype.cleanup = function () {
+            this.position = null;
+            Component.prototype.cleanup.call(this);
         }
 
         ExplodeOnKillComponent.getName = function () { return "explodeonkill"; }

@@ -4,7 +4,7 @@
             Component.call(this, config, messageDispatcher);
             this.level = 1;
             this.experience = 0;
-            this.registerMessage('score', null);
+            this.registerMessage('score');
             this.updateExperienceAndLevel();
         }
 

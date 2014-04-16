@@ -6,7 +6,7 @@
             this.size = config.size;
             this.health = this.size * 400;
             this.registerMessage('kill');
-            this.registerMessage('move');
+            this.registerMessage('position');
             this.registerMessage('collide');
         }
 
@@ -26,7 +26,7 @@
                         this.messageDispatcher.sendMessage(new Message('spawn', { type: asteroids[size], config: { position: this.position, velocity: velocity } }, this));
                     }
                 }
-            } else if (message.subject == 'move') {
+            } else if (message.subject == 'position') {
                 this.position = message.data;
             } else if (message.subject == 'collide') {
                 if (message.data.other.type == 'bullet')
@@ -38,6 +38,11 @@
             if (this.health <= 0) {
                 this.sendMessage(new Message('kill', null, this));
             }
+        }
+
+        AsteroidSizeComponent.prototype.cleanup = function () {
+            this.position = null;
+            Component.prototype.cleanup.call(this);
         }
 
         AsteroidSizeComponent.getName = function () { return "asteroidsize"; }

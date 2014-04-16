@@ -5,17 +5,18 @@
             this.accel = [0,0]
             this.magnitude = config.magnitude;
 
+            this.registerMessage('acceleration');
             this.registerMessage('control');
         }
 
         AccelleratorComponent.prototype = new Component();
+
+        AccelleratorComponent.prototype.initialize = function () {
+        }
+
         AccelleratorComponent.prototype.update = function (frameTime) {
             if (this.accel[0] == 0 && this.accel[1] == 0)
                 return;
-
-            this.sendMessage(new Message('accel', { vector: [this.accel[0] * frameTime, this.accel[1] * frameTime], trigger: 'control' }));
-            
-            this.accel[0] = this.accel[1] = 0;
         }
 
         AccelleratorComponent.prototype.receiveMessage = function (message) {
@@ -34,7 +35,14 @@
                         this.accel[0] = this.magnitude;
                         break;
                 }
-            }
+            } else if (message.subject == 'acceleration')
+                this.accel = message.data;
+
+        }
+
+        AccelleratorComponent.prototype.cleanup = function () {
+            this.accel = null;
+            Component.prototype.cleanup.call(this);
         }
 
         AccelleratorComponent.getName = function () { return "accellerator"; }

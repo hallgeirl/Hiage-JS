@@ -6,24 +6,28 @@
             this.velocity = [0, 0];
             if (config.velocity)
                 this.velocity = [config.velocity[0], config.velocity[1]];
-            this.registerMessage("accel", this.messageTag);
+            this.acceleration = [0, 0];
         }
 
         SpatialComponent.prototype = new Component();
+
+        SpatialComponent.prototype.initialize = function () {
+            this.sendMessage(new Message('position', this.position, this));
+            this.sendMessage(new Message('velocity', this.velocity, this));
+            this.sendMessage(new Message('acceleration', this.acceleration, this));
+        }
+
         SpatialComponent.prototype.update = function (frameTime) {
             this.position[0] += this.velocity[0] * frameTime;
             this.position[1] += this.velocity[1] * frameTime;
 
-            this.sendMessage(new Message('move', [ this.position[0], this.position[1] ], this));
-            this.sendMessage(new Message('speed', [ this.velocity[0], this.velocity[1] ], this));
+            this.velocity[0] += this.acceleration[0] * frameTime;
+            this.velocity[1] += this.acceleration[1] * frameTime;
+
+            this.acceleration[0] = this.acceleration[1] = 0;
         }
 
         SpatialComponent.prototype.receiveMessage = function (message) {
-            if (message.subject == 'accel') {
-                
-                this.velocity[0] += message.data.vector[0];
-                this.velocity[1] += message.data.vector[1];
-            }
         }
 
         SpatialComponent.getName = function () { return "spatial"; }

@@ -31,9 +31,10 @@
         },
         {
             "type": "explodeonkill",
-            "particlesize": 0.5,
-            "particlecount": 5,
-            "size": 0.5,
+            "particlesize": 0.2,
+            "particlecount": 100,
+			"particleLifetime": 3,
+			"particleSpeed": 50,
             "sound": "explode"
         },
         {

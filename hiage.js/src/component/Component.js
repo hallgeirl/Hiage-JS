@@ -38,7 +38,7 @@
             for (var i = 0; i < this.messageHandlers.length; i++) {
                 this.messageDispatcher.deregisterHandler(this.messageHandlers[i].subject, this, this.messageHandlers[i].tag);
             }
-
+            this.messageDispatcher = null;
             this.owner = null;
         }
 
