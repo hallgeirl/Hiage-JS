@@ -11,7 +11,6 @@
             this.particleSpeed = 500;
             if (config.particleSpeed)
                 this.particleSpeed = config.particleSpeed;
-            this.position = [0,0]
             this.sound = config.sound;
             this.registerMessage('kill');
             this.registerMessage('position');

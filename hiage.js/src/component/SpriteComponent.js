@@ -12,7 +12,10 @@
                 position: [0, 0],
                 scale: 1,
                 color: [1, 1, 1, 1],
-                layer: 0
+                layer: 0,
+                sprite: null,
+                alive: true,
+                rotationOffset: 0
             }
 
             if (config.layer)
@@ -26,10 +29,9 @@
 
             this.resourceManager = resourceManager;
 
-            this.rotationOffset = config.rotation;
-            if (!this.rotationOffset)
-                this.rotationOffset = 0;
-
+            if (config.rotation)
+                this.spriteState.rotationOffset = config.rotation;
+            
             this.registerMessage('position');
             this.registerMessage('rotation');
             this.registerMessage('set-color');
@@ -37,8 +39,9 @@
 
         SpriteComponent.prototype = new Component();
         SpriteComponent.prototype.initialize = function () {
-            this.sprite = this.resourceManager.getResource("sprite", this.spriteState.name)
-            this.spriteState.animation = this.sprite.defaults.animation
+            this.spriteState.sprite = this.resourceManager.getResource("sprite", this.spriteState.name)
+            this.spriteState.animation = this.spriteState.sprite.defaults.animation
+            this.sendMessage(new Message("register-sprite", this.spriteState), null);
         }
 
         SpriteComponent.prototype.receiveMessage = function (message) {
@@ -48,25 +51,15 @@
                 this.spriteState.rotation = message.data;
             else if (message.subject == "set-color")
                 this.spriteState.color = message.data;
+            else if (message.subject == 'kill')
+                this.spriteState.alive = false;
         }
 
         SpriteComponent.prototype.update = function (frametime) {
-            var messagedata = {
-                name: this.spriteState.name,
-                position: this.spriteState.position,
-                rotation: -this.spriteState.rotation.value + this.rotationOffset,
-                scale: this.spriteState.scale,
-                frame: this.spriteState.frame,
-                animation: this.spriteState.animation,
-                sprite: this.sprite,
-                color: this.spriteState.color,
-                layer: this.spriteState.layer
-            }
-
-            this.sendMessage(new Message('render-sprite', messagedata), null);
         }
 
         SpriteComponent.prototype.cleanup = function () {
+            this.spriteState.alive = false;
             this.spriteState.position = null;
             this.spriteState.color = null;
             Component.prototype.cleanup.call(this);

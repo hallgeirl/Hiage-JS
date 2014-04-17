@@ -2,7 +2,6 @@
     function (Message, Component) {
         function GunComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.position = [0,0]
             this.rotation = { value: 0 };
             this.fire = false;
             this.cooldownTimer = 0;
@@ -41,10 +40,14 @@
             this.cooldownTimer -= frameTime;
 
             if (this.fire && this.cooldownTimer <= 0) {
+                var velocity = createVector();
                 for (var i = 0; i < this.barrels; i++) {
                     var finalAngle = this.rotation.value + this.spread * Math.random() - this.spread / 2;
-                    this.messageDispatcher.sendMessage(new Message('spawn', { type: 'bullet', config: { position: this.position, velocity: vectorScale(getDirectionFromAngle(finalAngle), 800), initial: finalAngle } }, this));
+                    getDirectionFromAngle(finalAngle, velocity)
+                    vectorScale(velocity, 800, velocity)
+                    this.messageDispatcher.sendMessage(new Message('spawn', { type: 'bullet', config: { position: this.position, velocity: velocity, initial: finalAngle } }, this));
                 }
+                releaseVector(velocity);
                 if (this.sound)
                     this.messageDispatcher.sendMessage(new Message('play-sound', this.sound));
                 this.cooldownTimer = this.cooldown;

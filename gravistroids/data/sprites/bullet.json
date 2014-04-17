@@ -2,8 +2,8 @@
   "texture": "bullet",
 
   "defaults": {
-    "frame-width": 20,
-    "frame-height": 24,
+    "frame-width": 26,
+    "frame-height": 11,
     "animation": "bullet"
   },
   
@@ -12,8 +12,8 @@
       "name": "bullet",
       "frames": [
         {
-          "x": 6,
-          "y": 7,
+          "x": 1,
+          "y": 2,
           "delay": 1,
           "next": 0
         }

@@ -2,7 +2,9 @@
     function (Message, Component) {
         function RotationComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.angle = { value: config.initial };
+            this.angle = { value: 0 };
+            if (config.initial)
+                this.angle.value = config.initial
             this.angleDiff = 0;
             this.rotationSpeed = config.speed;
             this.position = [0, 0];

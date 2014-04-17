@@ -15,18 +15,18 @@
 			"type": "accellerator",
 			"magnitude": 200
 		},
-		{
-			"type": "gravity",
-			"magnitude": 98.8
-		},
+		
 		{
 			"type": "exhaust",
 			"pipes": 5
 		},
 		{
 			"type": "rotation",
-			"initial": -1.57079632679489661923,
 			"speed": 0.05
+		},
+		{
+			"type": "gravity",
+			"magnitude": 98.8
 		},
 		{
 			"type": "gun",

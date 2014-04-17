@@ -51,12 +51,17 @@ define(["hiage.js/core/GameObject",
             var randomizeAngle = config.randomizeAngle;
             var speed = config.speed;
             angle = angle + Math.random() * randomizeAngle - randomizeAngle / 2;
-            var velocity = vectorScale(getDirectionFromAngle(angle), speed);
+            var velocity = createVector()
+            getDirectionFromAngle(angle, velocity)
+            vectorScale(velocity, speed, velocity);
+
             if (config.ownerVelocity)
-                velocity = vectorAdd(velocity, config.ownerVelocity);
+                vectorAdd(velocity, config.ownerVelocity, velocity);
+
             config.velocity = velocity;
 
             this.messageDispatcher.sendMessage(new Message('spawn', { type: config.type, config: config }));
+            releaseVector(velocity);
         }
         return ObjectFactory;
     });

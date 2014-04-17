@@ -27,19 +27,17 @@ function cloneArray(obj) {
 }
 
 function getAngleFromDirection(direction) {
-	var angle = Math.acos(direction[0]);
-	if (Math.sin(direction[1]) > 0)
-		angle = 2*Math.PI - angle;
-	
-	return angle;
+	return Math.atan2(direction[1],direction[0]);
 }
 
-function getDirectionFromAngle(angle) {
-	return [Math.cos(angle), -Math.sin(angle)];
+function getDirectionFromAngle(angle, dest) {
+    dest[0] = Math.cos(angle)
+    dest[1] = Math.sin(angle)
 }
 
-function vectorAdd(vector1, vector2) {
-    return [vector1[0]+vector2[0], vector1[1]+vector2[1]];
+function vectorAdd(vector1, vector2, dest) {
+    dest[0] = vector1[0]+vector2[0]
+    dest[1] = vector1[1]+vector2[1]
 }
 
 function vectorLength(vector) {
@@ -59,10 +57,43 @@ function vectorInvert(vector) {
     return [-vector[0], -vector[1]];
 }
 
-function vectorScale(vector, scalar) {
-	return [vector[0]*scalar, vector[1]*scalar];
+function vectorScale(vector, scalar, dest) {
+    dest[0] = vector[0]*scalar
+    dest[1] = vector[1]*scalar
 }
 
 function vectorDifference(vector1, vector2) {
     return [vector1[0] - vector2[0], vector1[1] - vector2[1]];
 }
+
+function createVector() {
+    if (vectorPool.length == 0)
+    {
+        for (var i = 0; i < 100; i++)
+            vectorPool.push([0,0])
+    }
+    return vectorPool.pop();
+}
+
+function releaseVector(vector) {
+    vector[0] = 0;
+    vector[1] = 0;
+    vectorPool.push(vector)
+}
+
+function createObject() {
+    if (objectPool.length == 0) {
+        for (var i = 0; i < 100; i++)
+            objectPool.push([0, 0])
+    }
+    return objectPool.pop();
+}
+
+function releaseObject(obj) {
+    for (var prop in obj)
+        delete obj[prop]
+}
+
+var vectorPool = []
+for (var i = 0; i < 10000; i++)
+    vectorPool.push([0,0])

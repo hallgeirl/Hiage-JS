@@ -2,7 +2,6 @@
     function (Message, Component) {
         function AsteroidSizeComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.position = [0,0]
             this.size = config.size;
             this.health = this.size * 400;
             this.registerMessage('kill');
@@ -17,14 +16,16 @@
         AsteroidSizeComponent.prototype.receiveMessage = function (message) {
             if (message.subject == 'kill') {
                 if ((message.data == null || message.data.mode != 'final') && this.size > 1) {
+                    var velocity = createVector();
                     for (var i = 0; i < 2; i++) {
-                        var velocity = getDirectionFromAngle(Math.random() * 2 * Math.PI);
-                        velocity = vectorScale(velocity, 200);
+                        getDirectionFromAngle(Math.random() * 2 * Math.PI, velocity);
+                        vectorScale(velocity, 200, velocity);
 
                         var size = this.size - 1 - 1;
                         var asteroids = ["asteroid_small", "asteroid_medium", "asteroid_large"];
                         this.messageDispatcher.sendMessage(new Message('spawn', { type: asteroids[size], config: { position: this.position, velocity: velocity } }, this));
                     }
+                    releaseVector(velocity)
                 }
             } else if (message.subject == 'position') {
                 this.position = message.data;

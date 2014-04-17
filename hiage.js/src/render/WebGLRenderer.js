@@ -8,6 +8,7 @@
             this.messageDispatcher.registerHandler('render', this);
             this.messageDispatcher.registerHandler('rendertext', this);
             this.messageDispatcher.registerHandler('render-sprite', this);
+            this.messageDispatcher.registerHandler('register-sprite', this);
 
             this.$container = $("#" + container);
             var width = height * aspectRatio;
@@ -82,10 +83,9 @@
                 case "rendertext":
                     this.addText(message.data);
                     break;
-                case "render-sprite":
+                case "register-sprite":
                     if (!this.sprites[message.data.layer])
                         this.sprites[message.data.layer] = []
-
                     this.sprites[message.data.layer].push(message.data);
                     break;
             }
@@ -110,16 +110,17 @@
 
             for (var i = 0; i < layers.length; i++) {
                 var layer = layers[i];
-                for (var j = 0; j < this.sprites[layer].length; j++) {
-                    this.renderSprite(this.sprites[layer][j])
+                for (var j = this.sprites[layer].length - 1; j >= 0; j--) {
+                    if (this.sprites[layer][j].alive)
+                        this.renderSprite(this.sprites[layer][j])
+                    else
+                        this.sprites[layer].splice(j, 1);
                 }
             }
 
             for (var i = 0; i < this.texts.length; i++) {
                 this.renderText(this.texts[i])
             }
-
-            this.sprites = {};
 
             this.texts = [];
         }
@@ -143,7 +144,7 @@
             var frameHeight = config.sprite.defaults["frame-height"]
 
             mat4.translate(this.mvMatrix, [config.position[0], config.position[1], config.layer]);
-            mat4.rotate(this.mvMatrix, config.rotation - Math.PI / 2.0, [0, 0, 1]);
+            mat4.rotate(this.mvMatrix, config.rotation.value, [0, 0, 1]);
             mat4.scale(this.mvMatrix, [frameWidth * config.scale, frameHeight * config.scale, 1]);
             mat4.translate(this.mvMatrix, [-0.5, -0.5, 0]);
             

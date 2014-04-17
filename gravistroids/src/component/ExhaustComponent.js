@@ -2,7 +2,6 @@
     function (Message, Component) {
         function ExhaustComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.position = [0,0]
             this.nparticles = config.pipes;
             this.rotation = { value: 0 };
             this.timer = new Date().getTime();
@@ -23,8 +22,10 @@
             } else if (message.subject == 'control' && (message.data.button == 'up' || message.data.button == 'down' || message.data.button == 'left' || message.data.button == 'right')) {
                 var direction = vectorInvert(vectorNormalize(this.acceleration));
                 var angle = getAngleFromDirection(direction);
-                var shipDirection = getDirectionFromAngle(this.rotation.value);
-                var exhaustPosition = vectorAdd(this.position, vectorScale(shipDirection, -20));
+                var exhaustPosition = createVector()
+                getDirectionFromAngle(this.rotation.value, exhaustPosition);
+                vectorScale(exhaustPosition, -20, exhaustPosition)
+                vectorAdd(this.position, exhaustPosition, exhaustPosition)
                 if (new Date().getTime() - this.timer >= 10 / this.nparticles) {
                     for (var i = 0; i < this.nparticles; i++) {
                         this.timer = new Date().getTime();
@@ -41,6 +42,7 @@
                         }));
                     }
                 }
+                releaseVector(exhaustPosition);
             } else if (message.subject == 'acceleration') {
                 this.acceleration = message.data;
             }

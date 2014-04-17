@@ -2,8 +2,8 @@
   "texture": "ship",
 
   "defaults": {
-    "frame-width": 346,
-    "frame-height": 476,
+    "frame-width": 454,
+    "frame-height": 322,
     "animation": "stand"
   },
   

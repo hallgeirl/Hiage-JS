@@ -9,7 +9,6 @@
         },
         {
             "type": "rotation",
-            "initial": 0,
             "speed": 0
         },
         {

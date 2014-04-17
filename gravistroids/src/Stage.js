@@ -48,8 +48,17 @@ define(["hiage.js/CollisionManager",
                 fontFamily: 'Calibri',
                 fill: [1, 1, 1, 1]
             };
+            this.vpoolText = {
+                x: 20,
+                y: 100,
+                text: '0',
+                fontSize: 16,
+                fontFamily: 'Calibri',
+                fill: [1, 1, 1, 1]
+            };
             this.texts.push(this.scoreText);
             this.texts.push(this.experienceText);
+            //this.texts.push(this.vpoolText);
             this.spawnObject('ship', { position: [this.stageWidth / 2, this.stageHeight * 0.2] });
 
             for (var i = 0; i < 100; i++) {
@@ -117,9 +126,12 @@ define(["hiage.js/CollisionManager",
                 this.difficultyTimer = 10;
             }
 
+            this.vpoolText.text = vectorPool.length;
+
             for (var i = 0; i < this.texts.length; i++) {
                 this.messageDispatcher.sendMessage(new Message("rendertext", this.texts[i]));
             }
+
         }
 
         Stage.prototype.receiveMessage = function (message, sender) {

@@ -2,7 +2,6 @@
     function (Message, Component) {
         function AccelleratorComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.accel = [0,0]
             this.magnitude = config.magnitude;
 
             this.registerMessage('acceleration');

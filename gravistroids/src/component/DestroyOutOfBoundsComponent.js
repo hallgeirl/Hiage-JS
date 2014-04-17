@@ -2,7 +2,6 @@
     function (Message, Component, Stage) {
         function DestroyOutOfBoundsComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.position = [0,0]
             this.registerMessage('position');
         }
 
