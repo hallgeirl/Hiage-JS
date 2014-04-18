@@ -2,10 +2,6 @@
     function (Message, Component) {
         function ControllerComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.registerMessage('mousemove', null);
-
-            this.pressed = {};
-            this.mouse = { left: false, right: false, position: [0, 0] };
             var that = this;
             window.addEventListener('keydown', function (evt) {
                 that.pressed[evt.keyCode] = true;
@@ -34,6 +30,15 @@
         }
 
         ControllerComponent.prototype = new Component();
+
+        ControllerComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
+            this.registerMessage('mousemove', null);
+
+            this.pressed = {};
+            this.mouse = { left: false, right: false, position: [0, 0] };
+        }
+
         ControllerComponent.prototype.update = function (frameTime) {
             if (this.mouse.left) {
                 this.sendMessage(new Message('control', { button: 'mouseleft', position: this.mouse.position }));
@@ -61,10 +66,6 @@
             if (message.subject == 'mousemove') {
                 this.mouse.position = message.data;
             }
-        }
-
-        ControllerComponent.prototype.getHandledMessages = function () {
-            return ['mousemove'];
         }
 
         ControllerComponent.getName = function () { return "controller"; }

@@ -2,6 +2,13 @@
     function (Message, Component) {
         function AsteroidSizeComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
+            
+        }
+
+        AsteroidSizeComponent.prototype = new Component();
+
+        AsteroidSizeComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
             this.size = config.size;
             this.health = this.size * 400;
             this.registerMessage('kill');
@@ -9,7 +16,6 @@
             this.registerMessage('collide');
         }
 
-        AsteroidSizeComponent.prototype = new Component();
         AsteroidSizeComponent.prototype.initialize = function () {
         }
 

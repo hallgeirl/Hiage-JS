@@ -2,10 +2,15 @@
     function (Message, Component, Stage) {
         function DestroyOutOfBoundsComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.registerMessage('position');
         }
 
         DestroyOutOfBoundsComponent.prototype = new Component();
+
+        DestroyOutOfBoundsComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
+            this.registerMessage('position');
+        }
+
         DestroyOutOfBoundsComponent.prototype.receiveMessage = function (message) {
             if (message.subject == 'position') {
                 this.position = message.data;

@@ -27,10 +27,7 @@ define(["hiage.js/core/GameObject",
         ObjectFactory.prototype.createComponent = function (template, config) {
             var finalTemplate = ObjectFactory.getFinalComponentConfig(template, config);
 
-            var component = ComponentFactory.createComponent(template.type, finalTemplate, this.messageDispatcher, this.resourceManager);
-            component.type = template.type;
-
-            return component;
+            return ComponentFactory.createComponent(template.type, finalTemplate, this.messageDispatcher, this.resourceManager);
         }
 
         ObjectFactory.getFinalComponentConfig = function (template, config) {

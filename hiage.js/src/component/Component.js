@@ -1,23 +1,22 @@
 ﻿define([],
     function () {
         function Component(config, messageDispatcher) {
-            if (!config)
+            if (!config) {
                 return;
+            }
 
-            this.owner = null;
             this.messageDispatcher = messageDispatcher;
-            this.messageTag = config.messageTag;
+        }
 
+        Component.prototype.configure = function (config, object) {
+            this.messageTag = config.messageTag;
             this.messageHandlers = [];
         }
-
-        Component.prototype.receiveMessage = function (message) { }
-        Component.prototype.update = function (frameTime) { }
         Component.prototype.initialize = function () { }
 
-        Component.prototype.getHandledMessages = function () {
-            return [];
-        }
+        Component.prototype.receiveMessage = function (message) { }
+
+        Component.prototype.update = function (frameTime) { }
 
         Component.prototype.registerMessage = function (subject, tag) {
             if (typeof (tag) == 'undefined')

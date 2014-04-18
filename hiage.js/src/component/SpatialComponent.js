@@ -2,6 +2,12 @@
     function (Message, Component) {
         function SpatialComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
+        }
+
+        SpatialComponent.prototype = new Component();
+
+        SpatialComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
             this.position = createVector();
             this.position[0] = config.position[0];
             this.position[1] = config.position[1];
@@ -14,8 +20,6 @@
             this.acceleration[0] = 0;
             this.acceleration[1] = 0;
         }
-
-        SpatialComponent.prototype = new Component();
 
         SpatialComponent.prototype.initialize = function () {
             this.sendMessage(new Message('position', this.position, this));

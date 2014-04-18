@@ -3,6 +3,14 @@
         function SpriteComponent(config, messageDispatcher, resourceManager) {
             Component.call(this, config, messageDispatcher);
 
+            this.resourceManager = resourceManager;
+        }
+
+        SpriteComponent.prototype = new Component();
+
+        SpriteComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config)
+
             this.spriteState = {
                 name: config.sprite,
                 animation: "",
@@ -27,17 +35,14 @@
             if (config.color)
                 this.spriteState.color = config.color;
 
-            this.resourceManager = resourceManager;
-
             if (config.rotation)
                 this.spriteState.rotationOffset = config.rotation;
-            
+
             this.registerMessage('position');
             this.registerMessage('rotation');
             this.registerMessage('set-color');
         }
 
-        SpriteComponent.prototype = new Component();
         SpriteComponent.prototype.initialize = function () {
             this.spriteState.sprite = this.resourceManager.getResource("sprite", this.spriteState.name)
             this.spriteState.animation = this.spriteState.sprite.defaults.animation

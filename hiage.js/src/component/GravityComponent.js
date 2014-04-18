@@ -2,12 +2,15 @@
     function (Message, Component) {
         function GravityComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
+        }
+
+        GravityComponent.prototype = new Component();
+        GravityComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
             this.gravity = config.magnitude;
             this.registerMessage('acceleration');
             this.acceleration = [0, 0];
         }
-
-        GravityComponent.prototype = new Component();
         GravityComponent.prototype.update = function (frameTime) {
             this.acceleration[1] -= this.gravity;
         }

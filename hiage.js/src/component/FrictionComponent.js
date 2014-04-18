@@ -2,6 +2,12 @@
     function (Message, Component) {
         function FrictionComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
+        }
+
+        FrictionComponent.prototype = new Component();
+
+        FrictionComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
             this.magnitude = config.friction;
             this.velocity = [0, 0];
             this.acceleration = [0, 0];
@@ -9,7 +15,6 @@
             this.registerMessage('acceleration');
         }
 
-        FrictionComponent.prototype = new Component();
         FrictionComponent.prototype.receiveMessage = function (message) {
             if (message.subject == 'velocity')
                 this.velocity = message.data;

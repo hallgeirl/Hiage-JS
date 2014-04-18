@@ -7,7 +7,10 @@
             if (!ComponentFactory.components[type])
                 throw "Component of type " + type + " is not registered."
 
-            return new ComponentFactory.components[type](config, messageDispatcher, resourceManager);
+            var component = new ComponentFactory.components[type](config, messageDispatcher, resourceManager);
+            component.configure(config);
+
+            return component;
         }
 
         ComponentFactory.registerComponent = function (type, definition) {

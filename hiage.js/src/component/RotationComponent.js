@@ -2,6 +2,12 @@
     function (Message, Component) {
         function RotationComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
+        }
+
+        RotationComponent.prototype = new Component();
+
+        RotationComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
             this.angle = { value: 0 };
             if (config.initial)
                 this.angle.value = config.initial
@@ -14,7 +20,6 @@
             this.registerMessage('rotate-right');
         }
 
-        RotationComponent.prototype = new Component();
         RotationComponent.prototype.initialize = function () {
             this.sendMessage(new Message('rotation', this.angle, this));
         }

@@ -2,6 +2,12 @@
     function (Message, Component) {
         function CollisionComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
+        }
+
+        CollisionComponent.prototype = new Component();
+
+        CollisionComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
             this.registerMessage('position');
             this.registerMessage('kill');
             this.collisionBox = {
@@ -9,8 +15,6 @@
                 radius: config.radius
             }
         }
-
-        CollisionComponent.prototype = new Component();
 
         CollisionComponent.prototype.initialize = function () {
             this.messageDispatcher.sendMessage(new Message('register-collision-target', { collisionBox: this.collisionBox, object: this.owner }));

@@ -2,10 +2,14 @@
     function (Message, Component) {
         function LifetimeComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.lifetime = config.lifetime;
         }
 
         LifetimeComponent.prototype = new Component();
+
+        LifetimeComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
+            this.lifetime = config.lifetime;
+        }
 
         LifetimeComponent.prototype.initialize = function () {
             this.sendMessage(new Message("lifetime", this.lifetime, this));

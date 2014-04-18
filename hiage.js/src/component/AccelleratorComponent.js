@@ -2,13 +2,17 @@
     function (Message, Component) {
         function AccelleratorComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
+        }
+
+        AccelleratorComponent.prototype = new Component();
+
+        AccelleratorComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
             this.magnitude = config.magnitude;
 
             this.registerMessage('acceleration');
             this.registerMessage('control');
         }
-
-        AccelleratorComponent.prototype = new Component();
 
         AccelleratorComponent.prototype.initialize = function () {
         }

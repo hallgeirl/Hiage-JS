@@ -2,10 +2,14 @@
     function (Message, Component) {
         function DieOnAsteroidCollisionComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.registerMessage('collide');
         }
 
         DieOnAsteroidCollisionComponent.prototype = new Component();
+
+        DieOnAsteroidCollisionComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
+            this.registerMessage('collide');
+        }
 
         DieOnAsteroidCollisionComponent.prototype.receiveMessage = function (message) {
             if (message.subject == 'collide' && isAsteroidCollision(message.data.other.type)) {

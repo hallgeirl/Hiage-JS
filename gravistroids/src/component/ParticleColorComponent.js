@@ -2,6 +2,12 @@
     function (Message, Component) {
         function ParticleColorComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
+        }
+
+        ParticleColorComponent.prototype = new Component();
+
+        ParticleColorComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
             this.level = 1;
             this.experience = 0;
             this.registerMessage('lifetime');
@@ -11,8 +17,6 @@
             this.lifetime = 1;
             this.color = [0, 0, 0, 0];
         }
-
-        ParticleColorComponent.prototype = new Component();
 
         ParticleColorComponent.prototype.receiveMessage = function(message) { 
             for (var i = 0; i < 4; i++)

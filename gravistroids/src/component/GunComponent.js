@@ -2,6 +2,12 @@
     function (Message, Component) {
         function GunComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
+        }
+
+        GunComponent.prototype = new Component();
+
+        GunComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
             this.rotation = { value: 0 };
             this.fire = false;
             this.cooldownTimer = 0;
@@ -14,7 +20,6 @@
             this.setWeaponLevel(0);
         }
 
-        GunComponent.prototype = new Component();
         GunComponent.prototype.receiveMessage = function (message) {
             if (message.subject == 'position') {
                 this.position = message.data;

@@ -2,6 +2,12 @@
     function (Message, Component) {
         function ExplodeOnKillComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
+        }
+
+        ExplodeOnKillComponent.prototype = new Component();
+
+        ExplodeOnKillComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
             this.particleSize = config.particlesize;
             this.particleCount = config.particlecount;
             this.particleLifetime = config.particleLifetime;
@@ -15,8 +21,6 @@
             this.registerMessage('kill');
             this.registerMessage('position');
         }
-
-        ExplodeOnKillComponent.prototype = new Component();
 
         ExplodeOnKillComponent.prototype.receiveMessage = function (message) {
             if (message.subject == 'kill' && (message.data == null || message.data.mode != 'final')) {

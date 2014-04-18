@@ -2,6 +2,12 @@
     function (Message, Component) {
         function ExhaustComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
+        }
+
+        ExhaustComponent.prototype = new Component();
+
+        ExhaustComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
             this.nparticles = config.pipes;
             this.rotation = { value: 0 };
             this.timer = new Date().getTime();
@@ -11,8 +17,6 @@
             this.registerMessage('acceleration');
             this.acceleration = [0, 0];
         }
-
-        ExhaustComponent.prototype = new Component();
 
         ExhaustComponent.prototype.receiveMessage = function (message) {
             if (message.subject == 'rotation') {

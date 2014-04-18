@@ -2,13 +2,18 @@
     function (Message, Component) {
         function WeaponLevelComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
+        }
+
+        WeaponLevelComponent.prototype = new Component();
+
+        WeaponLevelComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
             this.level = 1;
             this.experience = 0;
             this.registerMessage('score', null);
             this.updateExperienceAndLevel();
         }
 
-        WeaponLevelComponent.prototype = new Component();
         WeaponLevelComponent.prototype.receiveMessage = function (message) {
             if (message.subject == 'score') {
                 this.experience += message.data;

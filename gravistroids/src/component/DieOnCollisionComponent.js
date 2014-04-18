@@ -2,10 +2,14 @@
     function (Message, Component) {
         function DieOnCollisionComponent(config, messageDispatcher) {
             Component.call(this, config, messageDispatcher);
-            this.registerMessage('collide');
         }
 
         DieOnCollisionComponent.prototype = new Component();
+
+        DieOnCollisionComponent.prototype.configure = function (config) {
+            Component.prototype.configure.call(this, config);
+            this.registerMessage('collide');
+        }
 
         DieOnCollisionComponent.prototype.receiveMessage = function (message) {
             if (message.subject == 'collide' && this.owner.type != message.data.other.type && this.owner.type == 'bullet') {
