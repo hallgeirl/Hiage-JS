@@ -1,6 +1,7 @@
 define(["hiage.js/CollisionManager",
         "hiage.js/core/Message"],
     function (CollisionManager, Message) {
+        var asteroids = ["asteroid_small", "asteroid_medium", "asteroid_large"];
 
         function Stage(objectFactory, stageWidth, stageHeight, messageDispatcher) {
             this.collisionManager = new CollisionManager(messageDispatcher);
@@ -58,7 +59,7 @@ define(["hiage.js/CollisionManager",
             };
             this.texts.push(this.scoreText);
             this.texts.push(this.experienceText);
-            //this.texts.push(this.vpoolText);
+            this.texts.push(this.vpoolText);
             this.spawnObject('ship', { position: [this.stageWidth / 2, this.stageHeight * 0.2] });
 
             for (var i = 0; i < 100; i++) {
@@ -71,11 +72,12 @@ define(["hiage.js/CollisionManager",
 
         Stage.prototype.destroy = function () {
             for (var i = 0; i < this.objects.length; i++) {
-                this.messageDispatcher.sendMessage(new Message('kill', { mode: 'final' }, this), this.objects[i].id);
+                this.messageDispatcher.sendMessage(Message.pnew('kill', { mode: 'final' }, this), this.objects[i].id);
             }
 
             for (var i = this.objects.length - 1; i >= 0; i--) {
                 this.objects[i].cleanup();
+                this.objects[i].pdispose();
                 this.objects.splice(i, 1);
             }
         }
@@ -95,6 +97,7 @@ define(["hiage.js/CollisionManager",
             for (var i = this.objects.length - 1; i >= 0; i--) {
                 if (!this.objects[i].alive) {
                     this.objects[i].cleanup();
+                    this.objects[i].pdispose();
                     this.objects.splice(i, 1);
                 }
             }
@@ -103,7 +106,7 @@ define(["hiage.js/CollisionManager",
             if (this.spawnCounter <= 0) {
                 this.spawnCounter = this.easiness;
                 var size = Math.floor(Math.random() * 3)
-                var asteroids = ["asteroid_small", "asteroid_medium", "asteroid_large"];
+                
                 this.spawnObject(asteroids[size], {
                     position: [ Math.random() * this.stageWidth, this.stageHeight+100 ],
                     velocity: [ Math.random() * 100 - 50, -200 ]
@@ -126,10 +129,10 @@ define(["hiage.js/CollisionManager",
                 this.difficultyTimer = 10;
             }
 
-            this.vpoolText.text = vectorPool.length;
+            this.vpoolText.text = disposeBalance;
 
             for (var i = 0; i < this.texts.length; i++) {
-                this.messageDispatcher.sendMessage(new Message("rendertext", this.texts[i]));
+                this.messageDispatcher.sendMessage(Message.pnew("rendertext", this.texts[i]));
             }
 
         }

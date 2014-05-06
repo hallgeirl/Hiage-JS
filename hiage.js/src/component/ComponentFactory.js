@@ -7,8 +7,8 @@
             if (!ComponentFactory.components[type])
                 throw "Component of type " + type + " is not registered."
 
-            var component = new ComponentFactory.components[type](config, messageDispatcher, resourceManager);
-            component.configure(config);
+            var component = ComponentFactory.components[type].pnew();
+            component.configure(config, messageDispatcher, resourceManager);
 
             return component;
         }

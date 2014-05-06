@@ -51,13 +51,13 @@ define(["hiage.js/audio/AudioSystem",
                 height = width / this.aspectRatio;
             }
             
-            this.messageDispatcher.sendMessage(new Message("scene-resized", { width: width, height: height }));
+            this.messageDispatcher.sendMessage(Message.pnew("scene-resized", { width: width, height: height }));
         }
 
         function touchMove(that, e) {
             //var scale = that.renderer.getScale();
             var scale = 1;
-            that.messageDispatcher.sendMessage(new Message('mousemove', [ e.targetTouches[0].pageX / scale, e.targetTouches[0].pageY / scale ], that));
+            that.messageDispatcher.sendMessage(Message.pnew('mousemove', [ e.targetTouches[0].pageX / scale, e.targetTouches[0].pageY / scale ], that));
         }
 
         Game.prototype.attachEventListeners = function () {
@@ -69,7 +69,7 @@ define(["hiage.js/audio/AudioSystem",
                 var offsetX = e.offsetX == undefined ? e.layerX : e.offsetX;
                 var offsetY = e.offsetY == undefined ? e.layerY : e.offsetY;
                 var offs = that.renderer.screenToSceneCoordinates([offsetX, offsetY], [that.$container.height()*that.aspectRatio, that.$container.height()])
-                that.messageDispatcher.sendMessage(new Message('mousemove', [offs[0], offs[1]], that));
+                that.messageDispatcher.sendMessage(Message.pnew('mousemove', [offs[0], offs[1]], that));
             });
             this.$container.on('touchmove', function (e) {
                 touchMove(that, e);

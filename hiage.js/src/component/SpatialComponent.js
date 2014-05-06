@@ -1,13 +1,13 @@
 ﻿define(["hiage.js/core/Message", "hiage.js/component/Component"],
     function (Message, Component) {
-        function SpatialComponent(config, messageDispatcher) {
-            Component.call(this, config, messageDispatcher);
+        function SpatialComponent() {
         }
 
         SpatialComponent.prototype = new Component();
+        SpatialComponent.prototype.constructor = SpatialComponent;
 
-        SpatialComponent.prototype.configure = function (config) {
-            Component.prototype.configure.call(this, config);
+        SpatialComponent.prototype.configure = function (config, messageDispatcher) {
+            Component.prototype.configure.call(this, config, messageDispatcher);
             this.position = createVector();
             this.position[0] = config.position[0];
             this.position[1] = config.position[1];
@@ -22,9 +22,9 @@
         }
 
         SpatialComponent.prototype.initialize = function () {
-            this.sendMessage(new Message('position', this.position, this));
-            this.sendMessage(new Message('velocity', this.velocity, this));
-            this.sendMessage(new Message('acceleration', this.acceleration, this));
+            this.sendMessage(Message.pnew('position', this.position, this));
+            this.sendMessage(Message.pnew('velocity', this.velocity, this));
+            this.sendMessage(Message.pnew('acceleration', this.acceleration, this));
         }
 
         SpatialComponent.prototype.update = function (frameTime) {
@@ -48,6 +48,8 @@
         }
 
         SpatialComponent.getName = function () { return "spatial"; }
+
+        SpatialComponent.setupPool(500);
 
         return SpatialComponent;
     });

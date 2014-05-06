@@ -1,13 +1,13 @@
 ﻿define(["hiage.js/core/Message", "hiage.js/component/Component"],
     function (Message, Component) {
-        function ExhaustComponent(config, messageDispatcher) {
-            Component.call(this, config, messageDispatcher);
+        function ExhaustComponent() {
         }
 
         ExhaustComponent.prototype = new Component();
+        ExhaustComponent.prototype.constructor = ExhaustComponent;
 
-        ExhaustComponent.prototype.configure = function (config) {
-            Component.prototype.configure.call(this, config);
+        ExhaustComponent.prototype.configure = function (config, messageDispatcher) {
+            Component.prototype.configure.call(this, config, messageDispatcher);
             this.nparticles = config.pipes;
             this.rotation = { value: 0 };
             this.timer = new Date().getTime();
@@ -34,7 +34,7 @@
                     for (var i = 0; i < this.nparticles; i++) {
                         this.timer = new Date().getTime();
                         var red = Math.random();
-                        this.sendMessage(new Message('create-particle', {
+                        this.sendMessage(Message.pnew('create-particle', {
                             type: "exhaust-particle",
                             position: exhaustPosition,
                             angle: angle,
@@ -61,6 +61,8 @@
 
 
         ExhaustComponent.getName = function () { return "exhaust"; }
+
+        ExhaustComponent.setupPool(10);
 
         return ExhaustComponent;
     });

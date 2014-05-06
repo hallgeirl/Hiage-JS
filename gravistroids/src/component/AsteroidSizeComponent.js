@@ -1,14 +1,14 @@
 ﻿define(["hiage.js/core/Message", "hiage.js/component/Component"],
     function (Message, Component) {
-        function AsteroidSizeComponent(config, messageDispatcher) {
-            Component.call(this, config, messageDispatcher);
-            
+        var asteroids = ["asteroid_small", "asteroid_medium", "asteroid_large"];
+        function AsteroidSizeComponent() {
         }
 
         AsteroidSizeComponent.prototype = new Component();
+        AsteroidSizeComponent.prototype.constructor = AsteroidSizeComponent;
 
-        AsteroidSizeComponent.prototype.configure = function (config) {
-            Component.prototype.configure.call(this, config);
+        AsteroidSizeComponent.prototype.configure = function (config, messageDispatcher) {
+            Component.prototype.configure.call(this, config, messageDispatcher);
             this.size = config.size;
             this.health = this.size * 400;
             this.registerMessage('kill');
@@ -26,10 +26,9 @@
                     for (var i = 0; i < 2; i++) {
                         getDirectionFromAngle(Math.random() * 2 * Math.PI, velocity);
                         vectorScale(velocity, 200, velocity);
-
                         var size = this.size - 1 - 1;
-                        var asteroids = ["asteroid_small", "asteroid_medium", "asteroid_large"];
-                        this.messageDispatcher.sendMessage(new Message('spawn', { type: asteroids[size], config: { position: this.position, velocity: velocity } }, this));
+                        
+                        this.messageDispatcher.sendMessage(Message.pnew('spawn', { type: asteroids[size], config: { position: this.position, velocity: velocity } }, this));
                     }
                     releaseVector(velocity)
                 }
@@ -43,7 +42,7 @@
 
         AsteroidSizeComponent.prototype.update = function (frameTime) {
             if (this.health <= 0) {
-                this.sendMessage(new Message('kill', null, this));
+                this.sendMessage(Message.pnew('kill', null, this));
             }
         }
 
@@ -53,6 +52,8 @@
         }
 
         AsteroidSizeComponent.getName = function () { return "asteroidsize"; }
+
+        AsteroidSizeComponent.setupPool(10);
 
         return AsteroidSizeComponent;
     });

@@ -1,13 +1,13 @@
 ﻿define(["hiage.js/core/Message", "hiage.js/component/Component"],
     function (Message, Component) {
-        function ExplodeOnKillComponent(config, messageDispatcher) {
-            Component.call(this, config, messageDispatcher);
+        function ExplodeOnKillComponent() {
         }
 
         ExplodeOnKillComponent.prototype = new Component();
+        ExplodeOnKillComponent.prototype.constructor = ExplodeOnKillComponent;
 
-        ExplodeOnKillComponent.prototype.configure = function (config) {
-            Component.prototype.configure.call(this, config);
+        ExplodeOnKillComponent.prototype.configure = function (config, messageDispatcher) {
+            Component.prototype.configure.call(this, config, messageDispatcher);
             this.particleSize = config.particlesize;
             this.particleCount = config.particlecount;
             this.particleLifetime = config.particleLifetime;
@@ -25,7 +25,7 @@
         ExplodeOnKillComponent.prototype.receiveMessage = function (message) {
             if (message.subject == 'kill' && (message.data == null || message.data.mode != 'final')) {
                 for (var i = 0; i < this.particleCount; i++) {
-                    this.messageDispatcher.sendMessage(new Message('create-particle', {
+                    this.messageDispatcher.sendMessage(Message.pnew('create-particle', {
                         type: "ricochet-particle",
                         position: this.position,
                         angle: 0,
@@ -36,7 +36,7 @@
                     }));
                 }
                 if (this.sound)
-                    this.messageDispatcher.sendMessage(new Message('play-sound', this.sound));
+                    this.messageDispatcher.sendMessage(Message.pnew('play-sound', this.sound));
             } else if (message.subject == 'position') {
                 this.position = message.data;
             }
@@ -48,6 +48,8 @@
         }
 
         ExplodeOnKillComponent.getName = function () { return "explodeonkill"; }
+
+        ExplodeOnKillComponent.setupPool(100);
 
         return ExplodeOnKillComponent;
     });

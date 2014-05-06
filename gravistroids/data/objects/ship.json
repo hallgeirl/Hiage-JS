@@ -22,7 +22,8 @@
 		},
 		{
 			"type": "rotation",
-			"speed": 0.05
+			"speed": 0.05,
+			"initial": 1.57079632679489661923
 		},
 		{
 			"type": "gravity",

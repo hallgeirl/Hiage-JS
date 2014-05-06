@@ -1,13 +1,13 @@
 ﻿define(["hiage.js/core/Message", "hiage.js/component/Component"],
     function (Message, Component) {
-        function ParticleColorComponent(config, messageDispatcher) {
-            Component.call(this, config, messageDispatcher);
+        function ParticleColorComponent() {
         }
 
         ParticleColorComponent.prototype = new Component();
+        ParticleColorComponent.prototype.constructor = ParticleColorComponent;
 
-        ParticleColorComponent.prototype.configure = function (config) {
-            Component.prototype.configure.call(this, config);
+        ParticleColorComponent.prototype.configure = function (config, messageDispatcher) {
+            Component.prototype.configure.call(this, config, messageDispatcher);
             this.level = 1;
             this.experience = 0;
             this.registerMessage('lifetime');
@@ -22,7 +22,7 @@
             for (var i = 0; i < 4; i++)
                 this.step[i] = (this.target[i] - this.initial[i]) / message.data;
 
-            this.sendMessage(new Message("set-color", this.initial));
+            this.sendMessage(Message.pnew("set-color", this.initial));
         }
 
         ParticleColorComponent.prototype.update = function (frameTime) {
@@ -31,6 +31,8 @@
         }
 
         ParticleColorComponent.getName = function () { return "particlecolor"; }
+
+        ParticleColorComponent.setupPool(500);
 
         return ParticleColorComponent;
     });

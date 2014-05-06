@@ -1,7 +1,6 @@
 define(["hiage.js/core/GameObject",
         "hiage.js/component/ComponentFactory",
-        "hiage.js/core/Message",
-        "hiage.js/Util"],
+        "hiage.js/core/Message"],
     function (GameObject, ComponentFactory, Message) {
 
         function ObjectFactory(resourceManager, messageDispatcher) {
@@ -12,10 +11,10 @@ define(["hiage.js/core/GameObject",
         ObjectFactory.prototype.createObject = function (type, config) {
             var template = this.resourceManager.getResource("object", type);
 
-            var go = new GameObject(this.messageDispatcher);
+            var go = GameObject.pnew();
             go.type = type;
             config.messageTag = go.id;
-
+            go.configure(this.messageDispatcher);
             for (var i = 0; i < template.components.length; i++)
                 go.addComponent(this.createComponent(template.components[i], config));
 
@@ -57,7 +56,7 @@ define(["hiage.js/core/GameObject",
 
             config.velocity = velocity;
 
-            this.messageDispatcher.sendMessage(new Message('spawn', { type: config.type, config: config }));
+            this.messageDispatcher.sendMessage(Message.pnew('spawn', { type: config.type, config: config }));
             releaseVector(velocity);
         }
         return ObjectFactory;

@@ -1,13 +1,13 @@
 ﻿define(["hiage.js/core/Message", "hiage.js/component/Component"],
     function (Message, Component) {
-        function GunComponent(config, messageDispatcher) {
-            Component.call(this, config, messageDispatcher);
+        function GunComponent() {
         }
 
         GunComponent.prototype = new Component();
+        GunComponent.prototype.constructor = GunComponent;
 
-        GunComponent.prototype.configure = function (config) {
-            Component.prototype.configure.call(this, config);
+        GunComponent.prototype.configure = function (config, messageDispatcher) {
+            Component.prototype.configure.call(this, config, messageDispatcher);
             this.rotation = { value: 0 };
             this.fire = false;
             this.cooldownTimer = 0;
@@ -50,11 +50,11 @@
                     var finalAngle = this.rotation.value + this.spread * Math.random() - this.spread / 2;
                     getDirectionFromAngle(finalAngle, velocity)
                     vectorScale(velocity, 800, velocity)
-                    this.messageDispatcher.sendMessage(new Message('spawn', { type: 'bullet', config: { position: this.position, velocity: velocity, initial: finalAngle } }, this));
+                    this.messageDispatcher.sendMessage(Message.pnew('spawn', { type: 'bullet', config: { position: this.position, velocity: velocity, initial: finalAngle } }, this));
                 }
                 releaseVector(velocity);
                 if (this.sound)
-                    this.messageDispatcher.sendMessage(new Message('play-sound', this.sound));
+                    this.messageDispatcher.sendMessage(Message.pnew('play-sound', this.sound));
                 this.cooldownTimer = this.cooldown;
             }
 
@@ -67,6 +67,8 @@
         }
 
         GunComponent.getName = function () { return "gun"; }
+
+        GunComponent.setupPool(10);
 
         return GunComponent;
     });

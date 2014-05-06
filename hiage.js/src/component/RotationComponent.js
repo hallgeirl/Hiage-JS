@@ -1,13 +1,13 @@
 ﻿define(["hiage.js/core/Message", "hiage.js/component/Component"],
     function (Message, Component) {
-        function RotationComponent(config, messageDispatcher) {
-            Component.call(this, config, messageDispatcher);
+        function RotationComponent() {
         }
 
         RotationComponent.prototype = new Component();
+        RotationComponent.prototype.constructor = RotationComponent;
 
-        RotationComponent.prototype.configure = function (config) {
-            Component.prototype.configure.call(this, config);
+        RotationComponent.prototype.configure = function (config, messageDispatcher) {
+            Component.prototype.configure.call(this, config, messageDispatcher);
             this.angle = { value: 0 };
             if (config.initial)
                 this.angle.value = config.initial
@@ -21,7 +21,7 @@
         }
 
         RotationComponent.prototype.initialize = function () {
-            this.sendMessage(new Message('rotation', this.angle, this));
+            this.sendMessage(Message.pnew('rotation', this.angle, this));
         }
 
         RotationComponent.prototype.receiveMessage = function (message) {
@@ -67,6 +67,8 @@
         }
 
         RotationComponent.getName = function () { return "rotation"; }
+
+        RotationComponent.setupPool(500);
 
         return RotationComponent;
     });

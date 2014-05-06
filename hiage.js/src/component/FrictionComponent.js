@@ -1,13 +1,13 @@
 ﻿define(["hiage.js/core/Message", "hiage.js/component/Component"],
     function (Message, Component) {
-        function FrictionComponent(config, messageDispatcher) {
-            Component.call(this, config, messageDispatcher);
+        function FrictionComponent() {
         }
 
         FrictionComponent.prototype = new Component();
+        FrictionComponent.prototype.constructor = FrictionComponent;
 
-        FrictionComponent.prototype.configure = function (config) {
-            Component.prototype.configure.call(this, config);
+        FrictionComponent.prototype.configure = function (config, messageDispatcher) {
+            Component.prototype.configure.call(this, config, messageDispatcher);
             this.magnitude = config.friction;
             this.velocity = [0, 0];
             this.acceleration = [0, 0];
@@ -50,6 +50,8 @@
         }
 
         FrictionComponent.getName = function () { return "friction"; }
+
+        FrictionComponent.setupPool(500);
 
         return FrictionComponent;
     });

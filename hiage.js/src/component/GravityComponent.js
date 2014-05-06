@@ -1,12 +1,13 @@
 ﻿define(["hiage.js/core/Message", "hiage.js/component/Component"],
     function (Message, Component) {
-        function GravityComponent(config, messageDispatcher) {
-            Component.call(this, config, messageDispatcher);
+        function GravityComponent() {
         }
 
         GravityComponent.prototype = new Component();
-        GravityComponent.prototype.configure = function (config) {
-            Component.prototype.configure.call(this, config);
+        GravityComponent.prototype.constructor = GravityComponent;
+
+        GravityComponent.prototype.configure = function (config, messageDispatcher) {
+            Component.prototype.configure.call(this, config, messageDispatcher);
             this.gravity = config.magnitude;
             this.registerMessage('acceleration');
             this.acceleration = [0, 0];
@@ -25,6 +26,8 @@
         }
 
         GravityComponent.getName = function () { return "gravity"; }
+
+        GravityComponent.setupPool(500);
 
         return GravityComponent;
     });

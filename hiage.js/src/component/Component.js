@@ -1,14 +1,10 @@
 ﻿define([],
     function () {
-        function Component(config, messageDispatcher) {
-            if (!config) {
-                return;
-            }
-
-            this.messageDispatcher = messageDispatcher;
+        function Component() {
         }
 
-        Component.prototype.configure = function (config, object) {
+        Component.prototype.configure = function (config, messageDispatcher, resourceManager) {
+            this.messageDispatcher = messageDispatcher;
             this.messageTag = config.messageTag;
             this.messageHandlers = [];
         }

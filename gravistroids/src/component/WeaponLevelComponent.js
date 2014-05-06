@@ -1,13 +1,13 @@
 ﻿define(["hiage.js/core/Message", "hiage.js/component/Component"],
     function (Message, Component) {
-        function WeaponLevelComponent(config, messageDispatcher) {
-            Component.call(this, config, messageDispatcher);
+        function WeaponLevelComponent() {
         }
 
         WeaponLevelComponent.prototype = new Component();
+        WeaponLevelComponent.prototype.constructor = WeaponLevelComponent;
 
-        WeaponLevelComponent.prototype.configure = function (config) {
-            Component.prototype.configure.call(this, config);
+        WeaponLevelComponent.prototype.configure = function (config, messageDispatcher) {
+            Component.prototype.configure.call(this, config, messageDispatcher);
             this.level = 1;
             this.experience = 0;
             this.registerMessage('score', null);
@@ -25,13 +25,15 @@
             if (this.experience >= this.targetExperience) {
                 this.experience -= this.targetExperience;
                 this.level++;
-                this.sendMessage(new Message('set-weapon-level', this.level));
+                this.sendMessage(Message.pnew('set-weapon-level', this.level));
             }
             this.targetExperience = 1000 * Math.pow(2, this.level - 1);
-            this.sendMessage(new Message('experience', { currentXP: this.experience, targetXP: this.targetExperience }));
+            this.sendMessage(Message.pnew('experience', { currentXP: this.experience, targetXP: this.targetExperience }));
         }
 
         WeaponLevelComponent.getName = function () { return "weaponlevel"; }
+
+        WeaponLevelComponent.setupPool(10);
 
         return WeaponLevelComponent;
     });

@@ -1,13 +1,13 @@
 ﻿define(["hiage.js/core/Message", "hiage.js/component/Component"],
     function (Message, Component) {
-        function AccelleratorComponent(config, messageDispatcher) {
-            Component.call(this, config, messageDispatcher);
+        function AccelleratorComponent() {
         }
 
         AccelleratorComponent.prototype = new Component();
+        AccelleratorComponent.prototype.constructor = AccelleratorComponent;
 
-        AccelleratorComponent.prototype.configure = function (config) {
-            Component.prototype.configure.call(this, config);
+        AccelleratorComponent.prototype.configure = function (config, messageDispatcher) {
+            Component.prototype.configure.call(this, config, messageDispatcher);
             this.magnitude = config.magnitude;
 
             this.registerMessage('acceleration');
@@ -49,6 +49,8 @@
         }
 
         AccelleratorComponent.getName = function () { return "accellerator"; }
+
+        AccelleratorComponent.setupPool(500);
 
         return AccelleratorComponent;
     });

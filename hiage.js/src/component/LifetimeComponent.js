@@ -1,28 +1,30 @@
 ﻿define(["hiage.js/core/Message", "hiage.js/component/Component"],
     function (Message, Component) {
-        function LifetimeComponent(config, messageDispatcher) {
-            Component.call(this, config, messageDispatcher);
+        function LifetimeComponent() {
         }
 
         LifetimeComponent.prototype = new Component();
+        LifetimeComponent.prototype.constructor = LifetimeComponent;
 
-        LifetimeComponent.prototype.configure = function (config) {
-            Component.prototype.configure.call(this, config);
+        LifetimeComponent.prototype.configure = function (config, messageDispatcher) {
+            Component.prototype.configure.call(this, config, messageDispatcher);
             this.lifetime = config.lifetime;
         }
 
         LifetimeComponent.prototype.initialize = function () {
-            this.sendMessage(new Message("lifetime", this.lifetime, this));
+            this.sendMessage(Message.pnew("lifetime", this.lifetime, this));
         }
 
         LifetimeComponent.prototype.update = function (frameTime) {
             this.lifetime -= frameTime;
             if (this.lifetime <= 0) {
-                this.sendMessage(new Message('kill', null, this));
+                this.sendMessage(Message.pnew('kill', null, this));
             }
         }
 
         LifetimeComponent.getName = function () { return "lifetime"; }
+
+        LifetimeComponent.setupPool(500);
 
         return LifetimeComponent;
     });

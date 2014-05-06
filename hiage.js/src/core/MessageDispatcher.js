@@ -6,10 +6,10 @@ define(["hiage.js/Channel"],
 
         MessageDispatcher.prototype.sendMessage = function (message, tag) {
             var channel = this.channels[message.subject];
-            if (!channel)
-                return;
+            if (channel)
+                channel.sendMessage(message, tag);
 
-            channel.sendMessage(message, tag);
+            message.pdispose()
         }
 
         MessageDispatcher.prototype.registerHandler = function (messageSubject, receiver, tag) {

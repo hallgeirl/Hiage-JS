@@ -53,8 +53,8 @@ define(["hiage.js/core/Message"],
                     var pos2 = obj2.collisionBox.position;
 
                     if (radius >= vectorLength(vectorDifference(pos1, pos2))) {
-                        this.messageDispatcher.sendMessage(new Message('collide', { other: obj2.object }, this), obj1.object.id);
-                        this.messageDispatcher.sendMessage(new Message('collide', { other: obj1.object }, this), obj2.object.id);
+                        this.messageDispatcher.sendMessage(Message.pnew('collide', { other: obj2.object }, this), obj1.object.id);
+                        this.messageDispatcher.sendMessage(Message.pnew('collide', { other: obj1.object }, this), obj2.object.id);
                     }
                 }
             }
